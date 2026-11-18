@@ -17,21 +17,21 @@ class UserSeeder extends Seeder
             'email' => 'pierre@epelican.com',
             'pwrd_hash' => Hash::make('password'),
             'first_name' => 'Pierre',
-            'last_name' => 'Marchand',
+            'last_name' => null,
             'is_admin' => true,
         ],
         [
-            'email' => 'caroline@epelican.com',
+            'email' => 'sebastian@epelican.com',
             'pwrd_hash' => Hash::make('password'),
-            'first_name' => 'Caroline',
-            'last_name' => 'Marchand',
-            'is_admin' => false,
+            'first_name' => 'Sebastian',
+            'last_name' => null,
+            'is_admin' => true,
         ],
         [
             'email' => 'abigail@epelican.com',
             'pwrd_hash' => Hash::make('password'),
             'first_name' => 'Abigail',
-            'last_name' => 'Marchand',
+            'last_name' => null,
             'is_admin' => false,
         ]
         ]);
