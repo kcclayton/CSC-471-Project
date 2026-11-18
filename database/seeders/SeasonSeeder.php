@@ -10,18 +10,22 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('categories')->insert([
+        DB::table('seasons')->insert([
+            [
+                'name' => 'Year-Round',
+                'description' => 'Products available during every season.',
+            ],
             [
                 'name' => 'Spring',
-                'description' => 'Crops that grow in the spring season',
+                'description' => 'Products only available in the spring season.',
             ],
             [
                 'name' => 'Summer',
-                'description' => 'Crops that grow in the summer season',
+                'description' => 'Products only available in the summer season.',
             ],
             [
                 'name' => 'Fall',
-                'description' => 'Crops that grow in the fall season',
+                'description' => 'Products only available in the fall season.',
             ]
         ]);
     }
