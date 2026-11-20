@@ -15,6 +15,9 @@
 
             <div class="flex items-center gap-4 txt-sm">
                 @auth
+                    @can('admin')
+                        <a href="{{ route('admin.dashboard') }}" class="font-medium text-green-700 hover:underline">Admin</a>
+                    @endcan
                     <span>Hi, {{ Auth::user()->first_name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf 
