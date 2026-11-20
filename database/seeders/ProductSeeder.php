@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -10,8 +9,8 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // SELECT category_id name FROM categories
-        // gives ['Spring' => 1, 'Summer' => 2, 'Fall' => 3]
+        // SELECT season_id, name FROM seasons
+        // gives ['Year-Round' => 1, 'Spring' => 2, 'Summer' => 3, 'Fall' => 4]
         $seasons = DB::table('seasons')->pluck('season_id', 'name');
 
         $now = now();
@@ -35,7 +34,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Plant these in the spring. Takes 4 days to mature.',
                 'price' => 20,
                 // 'image_url' => '#',
-                'category_id' => $seasons['Spring'],
+                'season_id' => $seasons['Spring'],
                 'stock_qty' => 100,
                 'is_active' => true,
                 'created_at' => $now,
@@ -47,7 +46,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Plant these in the summer. Takes 12 days to mature.',
                 'price' => 80,
                 // 'image_url' => '#',
-                'category_id' => $seasons['Summer'],
+                'season_id' => $seasons['Summer'],
                 'stock_qty' => 100,
                 'is_active' => true,
                 'created_at' => $now,
@@ -59,7 +58,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Plant these in the fall. Takes 5 days to mature, and continues to produce after first harvest.',
                 'price' => 20,
                 // 'image_url' => '#',
-                'category_id' => $seasons['Fall'],
+                'season_id' => $seasons['Fall'],
                 'stock_qty' => 100,
                 'is_active' => true,
                 'created_at' => $now,
