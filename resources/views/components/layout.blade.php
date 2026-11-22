@@ -25,6 +25,7 @@
                             <span class="rounded-full bg-green-700 px-2 py-0.5 text-xs font-medium text-white">{{ $cartCount }}</span>
                         @endif
                     </a>
+                    <a href="{{ route('orders.index') }}" class="hover:underline">Orders</a>
                     <a href="{{ route('account.edit') }}" class="hover:underline">Hi, {{ Auth::user()->first_name }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

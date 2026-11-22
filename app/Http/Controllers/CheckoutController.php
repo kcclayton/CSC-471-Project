@@ -69,7 +69,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->withErrors(['checkout' => $e->getMessage()]);
         }
 
-        return redirect()->route('products.index')
+        return redirect()->route('orders.show', $orderId)
             ->with('status', "Thank you! Your order #{$orderId} has been placed.");
     }
 }
