@@ -48,11 +48,7 @@
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->product_id) }}"
                    class="group overflow-hidden rounded-lg border border-stone-200 bg-white hover:border-green-700">
-                    @if ($product->image_url)
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="aspect-square w-full object-cover">
-                    @else
-                        <div class="flex aspect-square items-center justify-center bg-green-50 text-5xl" aria-hidden="true">🌱</div>
-                    @endif
+                    <x-product-image :product="$product" />
 
                     <div class="p-4">
                         <p class="text-xs text-stone-500">{{ $product->season_name }}</p>

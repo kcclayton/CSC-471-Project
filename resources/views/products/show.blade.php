@@ -2,12 +2,7 @@
     <a href="{{ route('products.index') }}" class="mb-6 inline-block text-sm text-green-700 hover:underline">← Back to shop</a>
 
     <div class="grid gap-8 md:grid-cols-2">
-        @if ($product->image_url)
-            <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
-                 class="aspect-square w-full rounded-lg border border-stone-200 object-cover">
-        @else
-            <div class="flex aspect-square items-center justify-center rounded-lg border border-stone-200 bg-green-50 text-8xl" aria-hidden="true">🌱</div>
-        @endif
+        <x-product-image :product="$product" large class="rounded-lg border border-stone-200" />
 
         <div>
             <p class="text-sm text-stone-500">{{ $product->season_name }} · SKU {{ $product->sku }}</p>
