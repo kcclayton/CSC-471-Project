@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             SeasonSeeder::class,
             ProductSeeder::class,
             ProductAttributesSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }
