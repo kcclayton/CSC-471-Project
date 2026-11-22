@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/items', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/items/{item}', [CartController::class, 'update'])->whereNumber('item')->name('cart.update');
     Route::delete('/cart/items/{item}', [CartController::class, 'destroy'])->whereNumber('item')->name('cart.destroy');
 });

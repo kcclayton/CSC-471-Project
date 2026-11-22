@@ -19,7 +19,12 @@
                     @can('admin')
                         <a href="{{ route('admin.dashboard') }}" class="font-medium text-green-700 hover:underline">Admin</a>
                     @endcan
-                    <a href="{{ route('cart.index') }}" class="hover:underline">Cart</a>
+                    <a href="{{ route('cart.index') }}" class="flex items-center gap-1 hover:underline">
+                        Cart
+                        @if ($cartCount > 0)
+                            <span class="rounded-full bg-green-700 px-2 py-0.5 text-xs font-medium text-white">{{ $cartCount }}</span>
+                        @endif
+                    </a>
                     <a href="{{ route('account.edit') }}" class="hover:underline">Hi, {{ Auth::user()->first_name }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

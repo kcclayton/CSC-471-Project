@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateCartItemRequest;
+use App\Http\Requests\AddToCartRequest;
 use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,24 @@ class CartController extends Controller
             'items' => $this->cart->items($userId),
             'subtotal' => $this->cart->subtotal($userId),
         ]);
+    }
+
+    /**
+     * Add a product to the cart from its product page.
+     */
+    public function store(AddToCartRequest $request): RedirectResponse
+    {
+        $quantity = $this->cart->add(
+            Auth::id(),
+            $request->integer('product_id'),
+            $request->integer('quantity')
+        );
+
+        if ($quantity === 0) {
+            return back()->withErrors(['quantity' => 'Sorry, this product can\'t be added to your cart right now.']);
+        }
+
+        return back()->with('status', "Added to your cart. You now have {$quantity} of this item.");
     }
 
     /**
