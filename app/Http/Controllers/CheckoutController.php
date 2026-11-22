@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Exceptions\CheckoutException;
+use App\Services\OrderService;
 use App\Services\CartService;
 use App\Services\PricingService;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +17,7 @@ class CheckoutController extends Controller
     public function __construct(
         private CartService $cart,
         private PricingService $pricing,
+        private OrderService $orders,
     ) {}
 
     /**
@@ -56,12 +59,17 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Check the shipping details. In 6.3 this will also create the order.
+     * Place the order. If something in the cart changed, send the shopper back to review it.
      */
     public function store(CheckoutRequest $request): RedirectResponse
     {
-        return back()
-            ->withInput()
-            ->with('status', 'Your shipping details are valid. Placing the order comes next, in 6.3.');
+        try {
+            $orderId = $this->orders->place(Auth::id(), $request->validated());
+        } catch (CheckoutException $e) {
+            return redirect()->route('cart.index')->withErrors(['checkout' => $e->getMessage()]);
+        }
+
+        return redirect()->route('products.index')
+            ->with('status', "Thank you! Your order #{$orderId} has been placed.");
     }
 }
