@@ -14,13 +14,15 @@ class CartController extends Controller
     public function __construct(private CartService $cart) {}
 
     /**
-     * Show the logged-in user's cart.
+     * Show the logged-in user's cart, after fixing any items that changed since they were added.
      */
     public function index(): View
     {
         $userId = Auth::id();
+        $notices = $this->cart->reconcile($userId);
 
         return view('cart.index', [
+            'notices' => $notices,
             'items' => $this->cart->items($userId),
             'subtotal' => $this->cart->subtotal($userId),
         ]);

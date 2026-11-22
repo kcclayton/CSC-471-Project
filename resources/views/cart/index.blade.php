@@ -1,6 +1,17 @@
 <x-layout title="Your cart">
     <h1 class="mb-6 text-2xl font-semibold">Your cart</h1>
 
+    @if ($notices)
+        <div class="mb-6 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            <p class="mb-1 font-medium">Your cart was updated:</p>
+            <ul class="list-disc pl-5">
+                @foreach ($notices as $notice)
+                    <li>{{ $notice }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     @if ($errors->any())
         <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             @foreach ($errors->all() as $error)

@@ -171,6 +171,54 @@ class CartService
     }
 
     /**
+     * Bring the cart in line with the products table: remove items that are no longer
+     * for sale, and lower quantities that are more than the stock left.
+     *
+     * Returns a message for each change, to show the user.
+     *
+     * @return list<string>
+     */
+    public function reconcile(int $userId): array
+    {
+        $problems = DB::table('cart_items')
+            ->join('carts', 'carts.cart_id', '=', 'cart_items.cart_id')
+            ->join('products', 'products.product_id', '=', 'cart_items.product_id')
+            ->where('carts.user_id', $userId)
+            ->where(function ($query) {
+                $query->where('products.is_active', false)
+                    ->orWhereColumn('cart_items.quantity', '>', 'products.stock_qty');
+            })
+            ->select(
+                'cart_items.cart_item_id', 'cart_items.cart_id', 'cart_items.quantity',
+                'products.name', 'products.is_active', 'products.stock_qty'
+            )
+            ->get();
+
+        $messages = [];
+
+        foreach ($problems as $item) {
+            if (! $item->is_active) {
+                DB::table('cart_items')->where('cart_item_id', $item->cart_item_id)->delete();
+                $messages[] = "{$item->name} is no longer available and was removed from your cart.";
+            } elseif ($item->stock_qty < 1) {
+                DB::table('cart_items')->where('cart_item_id', $item->cart_item_id)->delete();
+                $messages[] = "{$item->name} is out of stock and was removed from your cart.";
+            } else {
+                DB::table('cart_items')
+                    ->where('cart_item_id', $item->cart_item_id)
+                    ->update(['quantity' => $item->stock_qty]);
+                $messages[] = "Only {$item->stock_qty} of {$item->name} left, so your quantity was lowered from {$item->quantity} to {$item->stock_qty}.";
+            }
+        }
+
+        if ($problems->isNotEmpty()) {
+            $this->touch($problems->first()->cart_id);
+        }
+
+        return $messages;
+    }
+
+    /**
      * Record that the cart changed.
      */
     private function touch(int $cartId): void
