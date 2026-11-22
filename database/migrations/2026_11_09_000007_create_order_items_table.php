@@ -17,9 +17,9 @@ return new class extends Migration
                   ->constrained('products', 'product_id')
                   ->restrictOnDelete();               // retire products with is_active instead
             $table->string('sku_at_purchase');
-            $table->decimal('unit_price', 10, 2);
+            $table->decimal('unit_price', 10, 0);
             $table->integer('quantity');
-            $table->decimal('line_total', 10, 2);
+            $table->decimal('line_total', 10, 0);
         });
     }
 
