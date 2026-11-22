@@ -18,4 +18,6 @@ return [
 
     'free_shipping_threshold' => 500,
 
+    'low_stock_threshold' => 10,
+
 ];

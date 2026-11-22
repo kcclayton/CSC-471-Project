@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\DB;
  */
 class OrderService
 {
+    /**
+     * Every order status, in the order they normally happen.
+     */
+    public const STATUSES = ['pending', 'shipped', 'delivered', 'cancelled'];
+
+    /**
+     * Which statuses an order can move to from each status.
+     *
+     * @var array<string, list<string>>
+     */
+    public const TRANSITIONS = [
+        'pending' => ['shipped', 'cancelled'],
+        'shipped' => ['delivered'],
+        'delivered' => [],
+        'cancelled' => [],
+    ];
+
     public function __construct(private PricingService $pricing) {}
 
     /**
@@ -82,4 +99,44 @@ class OrderService
             return $orderId;
         });
     }
+
+    /**
+     * Move an order to a new status. Cancelling puts its items back in stock.
+     *
+     * @throws \DomainException when the change isn't allowed from the order's current status
+     */
+    public function changeStatus(int $orderId, string $newStatus): void
+    {
+        DB::transaction(function () use ($orderId, $newStatus): void {
+            // Lock the order so two admins (or a double-click) can't change it at the same time.
+            $order = DB::table('orders')
+                ->where('order_id', $orderId)
+                ->lockForUpdate()
+                ->first(['status']);
+
+            if ($order === null) {
+                throw new \DomainException('That order doesn\'t exist.');
+            }
+
+            if (! in_array($newStatus, self::TRANSITIONS[$order->status] ?? [], true)) {
+                throw new \DomainException("A {$order->status} order can't be marked as {$newStatus}.");
+            }
+
+            if ($newStatus === 'cancelled') {
+                $items = DB::table('order_items')
+                    ->where('order_id', $orderId)
+                    ->orderBy('product_id')
+                    ->get(['product_id', 'quantity']);
+
+                foreach ($items as $item) {
+                    DB::table('products')
+                        ->where('product_id', $item->product_id)
+                        ->increment('stock_qty', $item->quantity, ['updated_at' => now()]);
+                }
+            }
+
+            DB::table('orders')->where('order_id', $orderId)->update(['status' => $newStatus]);
+        });
+    }
+
 }
