@@ -15,10 +15,10 @@ return new class extends Migration
                   ->restrictOnDelete();               // keep order history
             $table->timestamp('order_date')->useCurrent();
             $table->string('status', 20)->default('pending');
-            $table->decimal('subtotal', 10, 2);
-            $table->decimal('tax', 10, 2)->default(0);
-            $table->decimal('ship_cost', 10, 2)->default(0);
-            $table->decimal('total', 10, 2);
+            $table->decimal('subtotal', 10, 0);
+            $table->decimal('tax', 10,0)->default(0);
+            $table->decimal('ship_cost', 10, 0)->default(0);
+            $table->decimal('total', 10, 0);
             $table->string('ship_name');
             $table->string('ship_street');
             $table->string('ship_city');
