@@ -1,4 +1,5 @@
 <x-layout title="Admin">
+    <x-admin-nav />
     <h1 class="mb-6 text-2xl font-semibold">Admin dashboard</h1>
 
     <div class="grid gap-4 sm:grid-cols-3">
