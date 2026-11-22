@@ -14,6 +14,7 @@
             <a href="{{ url('/') }}" class="font-semibold">{{ config('app.name') }}</a>
 
             <div class="flex items-center gap-4 text-sm">
+                <a href="{{ route('products.index') }}" class="hover:underline">Shop</a>
                 @auth
                     @can('admin')
                         <a href="{{ route('admin.dashboard') }}" class="font-medium text-green-700 hover:underline">Admin</a>
