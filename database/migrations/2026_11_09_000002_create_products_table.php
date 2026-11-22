@@ -16,8 +16,8 @@ return new class extends Migration
             $table->decimal('price', 10, 0);
             $table->string('image_url')->nullable();
             $table->foreignId('season_id')
-                  ->constrained('seasons', 'season_id')
-                  ->restrictOnDelete();               // can't delete a season that still has products
+                ->constrained('seasons', 'season_id')
+                ->restrictOnDelete();               // can't delete a season that still has products
             $table->integer('stock_qty')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();                     // created_at + updated_at

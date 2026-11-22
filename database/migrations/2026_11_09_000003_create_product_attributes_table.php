@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id('attribute_id');
             $table->foreignId('product_id')
-                  ->constrained('products', 'product_id')
-                  ->cascadeOnDelete();
+                ->constrained('products', 'product_id')
+                ->cascadeOnDelete();
             $table->string('attr_name');
             $table->string('attr_value');
         });

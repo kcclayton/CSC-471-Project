@@ -19,8 +19,8 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['nullable', 'string', 'max:255'],
-            'email'      => [
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'email' => [
                 'required', 'string', 'email', 'max:255',
                 Rule::unique('users', 'email')->ignore($this->user()->getAuthIdentifier(), 'user_id'),
             ],

@@ -56,7 +56,7 @@ class AuthController extends Controller
     {
         if (! Auth::attempt($request->validated())) {
             return back()
-                ->withErrors(['email' =>'Those details don\'t match an account.'])
+                ->withErrors(['email' => 'Those details don\'t match an account.'])
                 ->onlyInput('email');
         }
 

@@ -11,11 +11,11 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id('order_item_id');
             $table->foreignId('order_id')
-                  ->constrained('orders', 'order_id')
-                  ->cascadeOnDelete();
+                ->constrained('orders', 'order_id')
+                ->cascadeOnDelete();
             $table->foreignId('product_id')
-                  ->constrained('products', 'product_id')
-                  ->restrictOnDelete();               // retire products with is_active instead
+                ->constrained('products', 'product_id')
+                ->restrictOnDelete();               // retire products with is_active instead
             $table->string('sku_at_purchase');
             $table->decimal('unit_price', 10, 0);
             $table->integer('quantity');

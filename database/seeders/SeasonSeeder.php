@@ -25,7 +25,7 @@ class SeasonSeeder extends Seeder
             [
                 'name' => 'Fall',
                 'description' => 'Products only available in the fall season.',
-            ]
+            ],
         ]);
     }
 }

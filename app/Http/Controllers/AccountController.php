@@ -32,8 +32,8 @@ class AccountController extends Controller
             ->where('user_id', Auth::id())
             ->update([
                 'first_name' => $data['first_name'],
-                'last_name'  => $data['last_name'] ?? null,
-                'email'      => $data['email'],
+                'last_name' => $data['last_name'] ?? null,
+                'email' => $data['email'],
             ]);
 
         return back()->with('status', 'Your details have been saved.');
