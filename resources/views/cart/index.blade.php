@@ -66,8 +66,10 @@
 
         <div class="mt-6 flex flex-col items-end gap-3">
             <p class="text-lg">Subtotal: <span class="font-semibold">{{ $subtotal }}g</span></p>
-            {{-- The checkout button goes here in Milestone 6 --}}
-            <p class="text-sm text-stone-500">Checkout is coming soon.</p>
+            <a href="{{ route('checkout.create') }}"
+               class="rounded-md bg-green-700 px-5 py-2 font-medium text-white hover:bg-green-800">
+                Checkout
+            </a>
         </div>
     @endif
 </x-layout>
