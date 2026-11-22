@@ -4,6 +4,33 @@
     <div class="max-w-2xl">
         <h1 class="mb-6 text-2xl font-semibold">{{ $product ? 'Edit '.$product->name : 'New product' }}</h1>
 
+                @if ($product)
+            <div @class([
+                'mb-6 flex flex-wrap items-center justify-between gap-3 rounded-md border px-4 py-3 text-sm',
+                'border-green-200 bg-green-50 text-green-800' => $product->is_active,
+                'border-amber-200 bg-amber-50 text-amber-800' => ! $product->is_active,
+            ])>
+                <span>
+                    {{ $product->is_active
+                        ? 'This product is in the shop.'
+                        : "This product has been removed. It's hidden from the shop but still appears in past orders." }}
+                </span>
+                <form method="POST" action="{{ $product->is_active
+                    ? route('admin.products.remove', $product->product_id)
+                    : route('admin.products.restore', $product->product_id) }}">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" @class([
+                        'rounded-md px-3 py-1.5 font-medium text-white',
+                        'bg-red-700 hover:bg-red-800' => $product->is_active,
+                        'bg-green-700 hover:bg-green-800' => ! $product->is_active,
+                    ])>
+                        {{ $product->is_active ? 'Remove from shop' : 'Restore to shop' }}
+                    </button>
+                </form>
+            </div>
+        @endif
+
         <form method="POST" enctype="multipart/form-data"
               action="{{ $product ? route('admin.products.update', $product->product_id) : route('admin.products.store') }}"
               class="space-y-5">
@@ -91,15 +118,6 @@
                     </div>
                 </div>
                 @error('image') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-            </div>
-
-            <div>
-                <input type="hidden" name="is_active" value="0">
-                <label class="flex items-center gap-2 text-sm font-medium">
-                    <input type="checkbox" name="is_active" value="1" class="rounded border-stone-300"
-                           @checked(old('is_active', $product?->is_active ?? true))>
-                    Active (shown in the shop)
-                </label>
             </div>
 
             <div class="flex items-center gap-4">

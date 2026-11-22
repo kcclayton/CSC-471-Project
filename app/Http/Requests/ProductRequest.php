@@ -40,7 +40,6 @@ class ProductRequest extends FormRequest
             'price' => ['required', 'integer', 'min:0', 'max:1000000'],
             'season_id' => ['required', 'integer', Rule::exists('seasons', 'season_id')],
             'stock_qty' => ['required', 'integer', 'min:0', 'max:1000000'],
-            'is_active' => ['boolean'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'remove_image' => ['boolean'],
         ];

@@ -3,6 +3,7 @@
         'admin.dashboard' => 'Dashboard',
         'admin.seasons.index' => 'Seasons',
         'admin.products.index' => 'Products',
+        'admin.orders.index' => 'Orders',
     ] as $routeName => $label)
         @php($active = request()->routeIs(str_replace('.index', '.*', $routeName)))
         <a href="{{ route($routeName) }}" @class([
