@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Auth\QueryBuilderUserProvider;
 use App\Auth\ShopUser;
+use App\Services\CartService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('admin', function (ShopUser $user): bool {
             return (bool) $user->is_admin;
+        });
+
+        View::composer('components.layout', function (\Illuminate\View\View $view): void {
+            $view->with('cartCount', Auth::check()
+                ? app(CartService::class)->itemCount(Auth::id())
+                : 0);
         });
     }
 }

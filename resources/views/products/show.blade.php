@@ -30,10 +30,33 @@
                 </dl>
             @endif
 
-            {{-- The Add to Cart form goes here in Milestone 5 --}}
-            <p class="mt-6 rounded-md border border-dashed border-stone-300 px-4 py-3 text-sm text-stone-500">
-                Add to cart is coming soon.
-            </p>
+            @if ($product->stock_qty > 0)
+                <form method="POST" action="{{ route('cart.store') }}" class="mt-6 flex items-end gap-3">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+
+                    <div>
+                        <label for="quantity" class="mb-1 block text-sm font-medium">Quantity</label>
+                        <input id="quantity" name="quantity" type="number"
+                               value="{{ old('quantity', 1) }}" min="1" max="{{ $product->stock_qty }}"
+                               class="w-24 rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                    </div>
+
+                    <button type="submit" class="rounded-md bg-green-700 px-5 py-2 font-medium text-white hover:bg-green-800">
+                        @auth
+                            Add to cart
+                        @else
+                            Log in to add to cart
+                        @endauth
+                    </button>
+                </form>
+
+                @error('quantity')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            @else
+                <p class="mt-6 text-sm text-stone-500">This product is out of stock.</p>
+            @endif
         </div>
     </div>
 </x-layout>
