@@ -11,12 +11,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
             $table->foreignId('user_id')
-                  ->constrained('users', 'user_id')
-                  ->restrictOnDelete();               // keep order history
+                ->constrained('users', 'user_id')
+                ->restrictOnDelete();               // keep order history
             $table->timestamp('order_date')->useCurrent();
             $table->string('status', 20)->default('pending');
             $table->decimal('subtotal', 10, 0);
-            $table->decimal('tax', 10,0)->default(0);
+            $table->decimal('tax', 10, 0)->default(0);
             $table->decimal('ship_cost', 10, 0)->default(0);
             $table->decimal('total', 10, 0);
             $table->string('ship_name');

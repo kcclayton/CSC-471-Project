@@ -16,11 +16,11 @@ class SeasonController extends Controller
     public function index(): View
     {
         $seasons = DB::table('seasons')
-            ->leftJoin('products', 'products.season_id', '=', 'seasons.season_id')
+            ->leftJoin('product_seasons', 'product_seasons.season_id', '=', 'seasons.season_id')
             ->groupBy('seasons.season_id')
             ->orderBy('seasons.season_id')
             ->select('seasons.season_id', 'seasons.name', 'seasons.description')
-            ->selectRaw('COUNT(products.product_id) as product_count')
+            ->selectRaw('COUNT(product_seasons.product_id) as product_count')
             ->get();
 
         return view('admin.seasons.index', compact('seasons'));
@@ -75,7 +75,7 @@ class SeasonController extends Controller
      */
     public function destroy(int $season): RedirectResponse
     {
-        if (DB::table('products')->where('season_id', $season)->exists()) {
+        if (DB::table('product_seasons')->where('season_id', $season)->exists()) {
             return back()->withErrors([
                 'season' => 'This season still has products. Move them to another season first.',
             ]);

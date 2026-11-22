@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CheckoutRequest;
 use App\Exceptions\CheckoutException;
-use App\Services\OrderService;
+use App\Http\Requests\CheckoutRequest;
 use App\Services\CartService;
+use App\Services\OrderService;
 use App\Services\PricingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -41,13 +41,13 @@ class CheckoutController extends Controller
             ->first(['ship_street', 'ship_city', 'ship_state', 'ship_zip', 'ship_phone']);
 
         $defaults = [
-            'ship_name'   => trim($user->first_name.' '.$user->last_name),
+            'ship_name' => trim($user->first_name.' '.$user->last_name),
             'ship_street' => $lastOrder->ship_street ?? '',
-            'ship_city'   => $lastOrder->ship_city ?? '',
-            'ship_state'  => $lastOrder->ship_state ?? '',
-            'ship_zip'    => $lastOrder->ship_zip ?? '',
-            'ship_phone'  => $lastOrder->ship_phone ?? '',
-            'ship_email'  => $user->email,
+            'ship_city' => $lastOrder->ship_city ?? '',
+            'ship_state' => $lastOrder->ship_state ?? '',
+            'ship_zip' => $lastOrder->ship_zip ?? '',
+            'ship_phone' => $lastOrder->ship_phone ?? '',
+            'ship_email' => $user->email,
         ];
 
         return view('checkout.create', [

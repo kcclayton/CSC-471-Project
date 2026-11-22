@@ -43,7 +43,7 @@
                     <tr>
                         <th class="px-4 py-3 font-medium">Product</th>
                         <th class="px-4 py-3 font-medium">SKU</th>
-                        <th class="px-4 py-3 font-medium">Season</th>
+                        <th class="px-4 py-3 font-medium">Seasons</th>
                         <th class="px-4 py-3 text-right font-medium">Price</th>
                         <th class="px-4 py-3 text-right font-medium">Stock</th>
                         <th class="px-4 py-3"><span class="sr-only">Actions</span></th>
@@ -61,7 +61,7 @@
                                 </div>
                             </td>
                             <td class="px-4 py-3 font-mono text-xs">{{ $product->sku }}</td>
-                            <td class="px-4 py-3">{{ $product->season_name }}</td>
+                            <td class="px-4 py-3">{{ $product->season_names }}</td>
                             <td class="px-4 py-3 text-right">{{ $product->price }}g</td>
                             <td @class(['px-4 py-3 text-right', 'font-medium text-red-600' => $product->stock_qty < 1])>
                                 {{ $product->stock_qty }}

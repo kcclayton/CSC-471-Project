@@ -11,12 +11,8 @@ class SeasonSeeder extends Seeder
     {
         DB::table('seasons')->insert([
             [
-                'name' => 'Year-Round',
-                'description' => 'Products available during every season.',
-            ],
-            [
                 'name' => 'Spring',
-                'description' => 'Products only available in the spring season.',
+                'description' => 'Products available in the spring season.',
             ],
             [
                 'name' => 'Summer',
@@ -25,7 +21,11 @@ class SeasonSeeder extends Seeder
             [
                 'name' => 'Fall',
                 'description' => 'Products only available in the fall season.',
-            ]
+            ],
+            [
+                'name' => 'Winter',
+                'description' => 'Products only available in the winter season.',
+            ],
         ]);
     }
 }

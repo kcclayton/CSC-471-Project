@@ -138,5 +138,4 @@ class OrderService
             DB::table('orders')->where('order_id', $orderId)->update(['status' => $newStatus]);
         });
     }
-
 }
