@@ -114,5 +114,74 @@
                 @endif
             </div>
         </form>
+
+            @if ($product)
+            @php($editing = old('_attribute_form'))
+
+            <section id="attributes" class="mt-12 border-t border-stone-200 pt-8">
+                <h2 class="mb-1 text-lg font-semibold">Attributes</h2>
+                <p class="mb-4 text-sm text-stone-600">Details listed on the product page, like Color or Days to mature.</p>
+
+                @if ($errors->productAttributes->any())
+                    <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        @foreach ($errors->productAttributes->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="divide-y divide-stone-200 rounded-lg border border-stone-200 bg-white">
+                    @forelse ($productAttributes as $attribute)
+                        <div class="flex flex-wrap items-center gap-2 p-3">
+                            <form method="POST"
+                                  action="{{ route('admin.products.attributes.update', [$product->product_id, $attribute->attribute_id]) }}"
+                                  class="flex flex-1 flex-wrap items-center gap-2">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="_attribute_form" value="{{ $attribute->attribute_id }}">
+                                <input name="attr_name" type="text" aria-label="Attribute name" required
+                                       value="{{ $editing == $attribute->attribute_id ? old('attr_name') : $attribute->attr_name }}"
+                                       class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                                <input name="attr_value" type="text" aria-label="Value" required
+                                       value="{{ $editing == $attribute->attribute_id ? old('attr_value') : $attribute->attr_value }}"
+                                       class="min-w-32 flex-1 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                                <button type="submit" class="text-sm text-green-700 hover:underline">Save</button>
+                            </form>
+
+                            <form method="POST"
+                                  action="{{ route('admin.products.attributes.destroy', [$product->product_id, $attribute->attribute_id]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-sm text-red-600 hover:underline">Remove</button>
+                            </form>
+                        </div>
+                    @empty
+                        <p class="p-3 text-sm text-stone-500">No attributes yet.</p>
+                    @endforelse
+                </div>
+
+                <form method="POST" action="{{ route('admin.products.attributes.store', $product->product_id) }}"
+                      class="mt-4 flex flex-wrap items-end gap-2">
+                    @csrf
+                    <input type="hidden" name="_attribute_form" value="new">
+                    <div>
+                        <label for="new_attr_name" class="mb-1 block text-sm font-medium">Name</label>
+                        <input id="new_attr_name" name="attr_name" type="text" required placeholder="e.g. Color"
+                               value="{{ $editing === 'new' ? old('attr_name') : '' }}"
+                               class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                    </div>
+                    <div class="flex-1">
+                        <label for="new_attr_value" class="mb-1 block text-sm font-medium">Value</label>
+                        <input id="new_attr_value" name="attr_value" type="text" required placeholder="e.g. Yellow"
+                               value="{{ $editing === 'new' ? old('attr_value') : '' }}"
+                               class="w-full rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                    </div>
+                    <button type="submit" class="rounded-md bg-green-700 px-4 py-1.5 text-sm font-medium text-white hover:bg-green-800">
+                        Add attribute
+                    </button>
+                </form>
+            </section>
+        @endif
+
     </div>
 </x-layout>

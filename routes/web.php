@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SeasonController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
@@ -54,6 +55,9 @@ Route::middleware(['auth', 'can:admin'])
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('seasons', SeasonController::class)->except('show')->where(['season' => '[0-9]+']);
         Route::resource('products', AdminProductController::class)->except(['show', 'destroy'])->where(['product' => '[0-9]+']);
+        Route::resource('products.attributes', ProductAttributeController::class)
+            ->only(['store', 'update', 'destroy'])
+            ->where(['product' => '[0-9]+', 'attribute' => '[0-9]+']);
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     });

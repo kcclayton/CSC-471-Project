@@ -65,9 +65,13 @@ class ProductController extends Controller
 
         abort_if($row === null, 404);
 
-        return view('admin.products.form', [
-            'product' => $row,
-            'seasons' => DB::table('seasons')->orderBy('season_id')->get(),
+            return view('admin.products.form', [
+                'product' => $row,
+                'seasons' => DB::table('seasons')->orderBy('season_id')->get(),
+                'productAttributes' => DB::table('product_attributes')
+                    ->where('product_id', $product)
+                    ->orderBy('attr_name')
+                    ->get(),
         ]);
     }
 
