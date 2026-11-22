@@ -5,7 +5,7 @@
         <x-product-image :product="$product" large class="rounded-lg border border-stone-200" />
 
         <div>
-            <p class="text-sm text-stone-500">{{ $product->season_name }} · SKU {{ $product->sku }}</p>
+            <p class="text-sm text-stone-500">{{ $productSeasons->join(' · ') }} · SKU {{ $product->sku }}</p>
             <h1 class="mt-1 text-3xl font-semibold">{{ $product->name }}</h1>
             <p class="mt-3 text-2xl font-semibold">{{ $product->price }}g</p>
 

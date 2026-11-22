@@ -38,7 +38,8 @@ class ProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:5000'],
             'price' => ['required', 'integer', 'min:0', 'max:1000000'],
-            'season_id' => ['required', 'integer', Rule::exists('seasons', 'season_id')],
+            'season_ids' => ['required', 'array', 'min:1'],
+            'season_ids.*' => ['integer', 'distinct', Rule::exists('seasons', 'season_id')],
             'stock_qty' => ['required', 'integer', 'min:0', 'max:1000000'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'remove_image' => ['boolean'],
@@ -54,7 +55,8 @@ class ProductRequest extends FormRequest
     {
         return [
             'sku' => 'SKU',
-            'season_id' => 'season',
+            'season_ids' => 'seasons',
+            'season_ids.*' => 'season',
             'stock_qty' => 'stock',
         ];
     }

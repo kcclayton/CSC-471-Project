@@ -55,22 +55,7 @@
                 </div>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-3">
-                <div>
-                    <label for="season_id" class="mb-1 block text-sm font-medium">Season</label>
-                    <select id="season_id" name="season_id" required
-                            class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
-                        <option value="">Choose…</option>
-                        @foreach ($seasons as $season)
-                            <option value="{{ $season->season_id }}"
-                                    @selected(old('season_id', $product?->season_id) == $season->season_id)>
-                                {{ $season->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('season_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
-
+            <div class="grid gap-4 sm:grid-cols-2">
                 <div>
                     <label for="price" class="mb-1 block text-sm font-medium">Price (g)</label>
                     <input id="price" name="price" type="number" min="0" step="1"
@@ -87,6 +72,22 @@
                     @error('stock_qty') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
+
+            <fieldset>
+                <legend class="mb-1 block text-sm font-medium">Seasons</legend>
+                <div class="flex flex-wrap gap-x-5 gap-y-2">
+                    @foreach ($seasons as $season)
+                        <label class="flex items-center gap-2 text-sm">
+                            <input type="checkbox" name="season_ids[]" value="{{ $season->season_id }}"
+                                   class="rounded border-stone-300"
+                                   @checked(in_array($season->season_id, old('season_ids', $selectedSeasons)))>
+                            {{ $season->name }}
+                        </label>
+                    @endforeach
+                </div>
+                @error('season_ids') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                @error('season_ids.*') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </fieldset>
 
             <div>
                 <label for="description" class="mb-1 block text-sm font-medium">

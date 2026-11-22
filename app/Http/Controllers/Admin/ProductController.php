@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,12 +21,12 @@ class ProductController extends Controller
         $showRemoved = $request->query('list') === 'removed';
 
         $products = DB::table('products')
-            ->join('seasons', 'seasons.season_id', '=', 'products.season_id')
             ->where('products.is_active', ! $showRemoved)
             ->select(
                 'products.product_id', 'products.sku', 'products.name', 'products.price',
-                'products.stock_qty', 'products.image_url', 'seasons.name as season_name'
+                'products.stock_qty', 'products.image_url'
             )
+            ->selectSub(fn ($query) => $this->seasonNames($query), 'season_names')
             ->orderBy('products.name')
             ->paginate(20)
             ->withQueryString();
@@ -46,21 +47,27 @@ class ProductController extends Controller
         return view('admin.products.form', [
             'product' => null,
             'seasons' => DB::table('seasons')->orderBy('season_id')->get(),
+            'selectedSeasons' => [],
         ]);
     }
 
     /**
-     * Save a new product, with its uploaded image if there is one. New products start in the shop.
+     * Save a new product with its seasons, and its uploaded image if there is one.
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-        $data = $request->safe()->except(['image', 'remove_image']);
+        $data = $request->safe()->except(['image', 'remove_image', 'season_ids']);
         $data['is_active'] = true;
         $data['image_url'] = $request->file('image')?->store('products', 'public');
         $data['created_at'] = now();
         $data['updated_at'] = now();
 
-        $productId = DB::table('products')->insertGetId($data, 'product_id');
+        $productId = DB::transaction(function () use ($data, $request): int {
+            $productId = DB::table('products')->insertGetId($data, 'product_id');
+            $this->syncSeasons($productId, $request->validated('season_ids'));
+
+            return $productId;
+        });
 
         return redirect()->route('admin.products.edit', $productId)->with('status', 'Product created.');
     }
@@ -77,6 +84,7 @@ class ProductController extends Controller
         return view('admin.products.form', [
             'product' => $row,
             'seasons' => DB::table('seasons')->orderBy('season_id')->get(),
+            'selectedSeasons' => DB::table('product_seasons')->where('product_id', $product)->pluck('season_id')->all(),
             'productAttributes' => DB::table('product_attributes')
                 ->where('product_id', $product)
                 ->orderBy('attr_name')
@@ -85,7 +93,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Save changes to a product. A new upload replaces the old image file.
+     * Save changes to a product and its seasons. A new upload replaces the old image file.
      */
     public function update(ProductRequest $request, int $product): RedirectResponse
     {
@@ -93,7 +101,7 @@ class ProductController extends Controller
 
         abort_if($current === null, 404);
 
-        $data = $request->safe()->except(['image', 'remove_image']);
+        $data = $request->safe()->except(['image', 'remove_image', 'season_ids']);
         $data['updated_at'] = now();
 
         if ($request->hasFile('image')) {
@@ -102,7 +110,10 @@ class ProductController extends Controller
             $data['image_url'] = null;
         }
 
-        DB::table('products')->where('product_id', $product)->update($data);
+        DB::transaction(function () use ($product, $data, $request): void {
+            DB::table('products')->where('product_id', $product)->update($data);
+            $this->syncSeasons($product, $request->validated('season_ids'));
+        });
 
         if (array_key_exists('image_url', $data) && $current->image_url !== null) {
             Storage::disk('public')->delete($current->image_url);
@@ -141,5 +152,31 @@ class ProductController extends Controller
             ->update(['is_active' => $active, 'updated_at' => now()]);
 
         return back()->with('status', "{$name} {$message}");
+    }
+
+    /**
+     * Replace a product's seasons with the given ones.
+     *
+     * @param  list<int|string>  $seasonIds
+     */
+    private function syncSeasons(int $productId, array $seasonIds): void
+    {
+        DB::table('product_seasons')->where('product_id', $productId)->delete();
+
+        DB::table('product_seasons')->insert(array_map(
+            fn ($seasonId) => ['product_id' => $productId, 'season_id' => (int) $seasonId],
+            $seasonIds
+        ));
+    }
+
+    /**
+     * Subquery that lists a product's season names, e.g. "Summer · Fall".
+     */
+    private function seasonNames(Builder $query): void
+    {
+        $query->from('product_seasons')
+            ->join('seasons', 'seasons.season_id', '=', 'product_seasons.season_id')
+            ->whereColumn('product_seasons.product_id', 'products.product_id')
+            ->selectRaw("string_agg(seasons.name, ' · ' ORDER BY seasons.season_id)");
     }
 }

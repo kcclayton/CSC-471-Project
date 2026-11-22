@@ -2,6 +2,7 @@
 
 use App\Services\CartService;
 use App\Services\OrderService;
+use Illuminate\Support\Facades\DB;
 
 beforeEach(function () {
     $this->adminId = createUser(['is_admin' => true]);
@@ -42,7 +43,7 @@ it('blocks customers from admin actions', function () {
 });
 
 it('lets admins create a product with a capitalised SKU', function () {
-    $seasonId = createSeason('Fall');
+    $season_ids = [$seasonId];
     loginAs($this->adminId);
 
     $this->post(route('admin.products.store'), [
@@ -59,7 +60,7 @@ it('rejects a duplicate SKU', function () {
 
     $this->post(route('admin.products.store'), [
         'sku' => 'spr-001', 'name' => 'Copy', 'price' => 10,
-        'season_id' => createSeason('Summer'), 'stock_qty' => 1,
+        'season_ids' => [createSeason('Summer')], 'stock_qty' => 1,
     ])->assertSessionHasErrors('sku');
 });
 
@@ -111,4 +112,26 @@ it('will not delete a season that still has products', function () {
     $this->delete(route('admin.seasons.destroy', $seasonId))->assertSessionHasErrors('season');
 
     $this->assertDatabaseHas('seasons', ['season_id' => $seasonId]);
+});
+
+it('saves several seasons for one product and requires at least one', function () {
+    $summer = createSeason('Summer');
+    $fall = createSeason('Fall');
+    loginAs($this->adminId);
+
+    $this->post(route('admin.products.store'), [
+        'sku' => 'SUM-002', 'name' => 'Corn Seeds', 'price' => 150, 'stock_qty' => 10,
+        'season_ids' => [$summer, $fall],
+    ])->assertSessionHasNoErrors();
+
+    $productId = DB::table('products')->where('sku', 'SUM-002')->value('product_id');
+
+    expect(DB::table('product_seasons')->where('product_id', $productId)->orderBy('season_id')->pluck('season_id')->all())
+        ->toBe([$summer, $fall]);
+
+    $this->put(route('admin.products.update', $productId), [
+        'sku' => 'SUM-002', 'name' => 'Corn Seeds', 'price' => 150, 'stock_qty' => 10,
+    ])->assertSessionHasErrors('season_ids');
+
+    expect(DB::table('product_seasons')->where('product_id', $productId)->count())->toBe(2);
 });

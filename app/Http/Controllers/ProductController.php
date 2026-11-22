@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -19,14 +20,16 @@ class ProductController extends Controller
         $seasons = DB::table('seasons')->orderBy('season_id')->get();
 
         $products = DB::table('products')
-            ->join('seasons', 'seasons.season_id', '=', 'products.season_id')
-            ->select(
-                'products.product_id', 'products.name', 'products.price',
-                'products.image_url', 'products.stock_qty', 'seasons.name as season_name'
-            )
+            ->select('products.product_id', 'products.name', 'products.price', 'products.image_url', 'products.stock_qty')
+            ->selectSub(fn ($query) => $this->seasonNames($query), 'season_names')
             ->where('products.is_active', true)
             ->when($selectedSeason, function ($query) use ($selectedSeason) {
-                $query->where('products.season_id', $selectedSeason);
+                $query->whereExists(function ($subquery) use ($selectedSeason) {
+                    $subquery->select(DB::raw(1))
+                        ->from('product_seasons')
+                        ->whereColumn('product_seasons.product_id', 'products.product_id')
+                        ->where('product_seasons.season_id', $selectedSeason);
+                });
             })
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
@@ -42,24 +45,39 @@ class ProductController extends Controller
     }
 
     /**
-     * Show one active product with its season and attributes, or a 404 page.
+     * Show one active product with its seasons and attributes, or a 404 page.
      */
     public function show(int $id): View
     {
         $product = DB::table('products')
-            ->join('seasons', 'seasons.season_id', '=', 'products.season_id')
-            ->select('products.*', 'seasons.name as season_name')
-            ->where('products.product_id', $id)
-            ->where('products.is_active', true)
+            ->where('product_id', $id)
+            ->where('is_active', true)
             ->first();
 
         abort_if($product === null, 404);
+
+        $productSeasons = DB::table('seasons')
+            ->join('product_seasons', 'product_seasons.season_id', '=', 'seasons.season_id')
+            ->where('product_seasons.product_id', $id)
+            ->orderBy('seasons.season_id')
+            ->pluck('seasons.name');
 
         $productAttributes = DB::table('product_attributes')
             ->where('product_id', $id)
             ->orderBy('attr_name')
             ->get();
 
-        return view('products.show', compact('product', 'productAttributes'));
+        return view('products.show', compact('product', 'productSeasons', 'productAttributes'));
+    }
+
+    /**
+     * Subquery that lists a product's season names, e.g. "Summer · Fall".
+     */
+    private function seasonNames(Builder $query): void
+    {
+        $query->from('product_seasons')
+            ->join('seasons', 'seasons.season_id', '=', 'product_seasons.season_id')
+            ->whereColumn('product_seasons.product_id', 'products.product_id')
+            ->selectRaw("string_agg(seasons.name, ' · ' ORDER BY seasons.season_id)");
     }
 }

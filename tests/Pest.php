@@ -50,23 +50,32 @@ function createSeason(string $name = 'Spring'): int
 
 function createProduct(array $overrides = []): int
 {
-    $seasonId = $overrides['season_id']
+    $seasonIds = (array) ($overrides['season_ids']
+        ?? $overrides['season_id']
         ?? DB::table('seasons')->value('season_id')
-        ?? createSeason();
+        ?? createSeason());
 
-    return DB::table('products')->insertGetId([
+    unset($overrides['season_ids'], $overrides['season_id']);
+
+    $productId = DB::table('products')->insertGetId([
         'sku' => 'TST-'.fake()->unique()->numerify('####'),
         'name' => 'Test Seeds',
         'description' => null,
         'price' => 20,
         'image_url' => null,
-        'season_id' => $seasonId,
         'stock_qty' => 10,
         'is_active' => true,
         'created_at' => now(),
         'updated_at' => now(),
         ...$overrides,
     ], 'product_id');
+
+    DB::table('product_seasons')->insert(array_map(
+        fn ($seasonId) => ['product_id' => $productId, 'season_id' => $seasonId],
+        $seasonIds
+    ));
+
+    return $productId;
 }
 
 /**
