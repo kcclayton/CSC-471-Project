@@ -25,10 +25,10 @@
                                 <span class="font-medium">{{ $item->name }}</span>
                             @endif
                             <p class="text-sm text-stone-500">
-                                SKU {{ $item->sku_at_purchase }} · {{ $item->quantity }} × {{ $item->unit_price }}g
+                                SKU {{ $item->sku_at_purchase }} · {{ $item->quantity }} × <x-price :amount="$item->unit_price" />
                             </p>
                         </div>
-                        <p class="font-semibold">{{ $item->line_total }}g</p>
+                        <p class="font-semibold"><x-price :amount="$item->line_total" /></p>
                     </div>
                 @endforeach
             </div>
@@ -39,21 +39,21 @@
             <dl class="space-y-1 rounded-lg border border-stone-200 bg-white p-4 text-sm">
                 <div class="flex justify-between">
                     <dt>Subtotal</dt>
-                    <dd>{{ $order->subtotal }}g</dd>
+                    <dd><x-price :amount="$order->subtotal" /></dd>
                 </div>
                 @if ($order->tax > 0)
                     <div class="flex justify-between">
                         <dt>Tax</dt>
-                        <dd>{{ $order->tax }}g</dd>
+                        <dd><x-price :amount="$order->tax" /></dd>
                     </div>
                 @endif
                 <div class="flex justify-between">
                     <dt>Shipping</dt>
-                    <dd>{{ $order->ship_cost > 0 ? $order->ship_cost.'g' : 'Free' }}</dd>
+                    <dd>@if ($order->ship_cost > 0) <x-price :amount="$order->ship_cost" /> @else Free @endif</dd>
                 </div>
                 <div class="flex justify-between border-t border-stone-200 pt-2 text-base font-semibold">
                     <dt>Total</dt>
-                    <dd>{{ $order->total }}g</dd>
+                    <dd><x-price :amount="$order->total" /></dd>
                 </div>
             </dl>
 

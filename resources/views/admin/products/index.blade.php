@@ -62,7 +62,7 @@
                             </td>
                             <td class="px-4 py-3 font-mono text-xs">{{ $product->sku }}</td>
                             <td class="px-4 py-3">{{ $product->season_names }}</td>
-                            <td class="px-4 py-3 text-right">{{ $product->price }}g</td>
+                            <td class="px-4 py-3 text-right"><x-price :amount="$product->price" /></td>
                             <td @class(['px-4 py-3 text-right', 'font-medium text-red-600' => $product->stock_qty < 1])>
                                 {{ $product->stock_qty }}
                             </td>

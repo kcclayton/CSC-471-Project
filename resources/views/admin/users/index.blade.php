@@ -28,7 +28,7 @@
                         <td class="px-4 py-3">{{ $user->email }}</td>
                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($user->created_at)->format('M j, Y') }}</td>
                         <td class="px-4 py-3 text-right">{{ $user->order_count }}</td>
-                        <td class="px-4 py-3 text-right font-semibold">{{ number_format($user->total_spent) }}g</td>
+                        <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$user->total_spent" /></td>
                     </tr>
                 @endforeach
             </tbody>

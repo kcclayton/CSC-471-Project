@@ -7,7 +7,7 @@
         <div>
             <p class="text-sm text-stone-500">{{ $productSeasons->join(' · ') }} · SKU {{ $product->sku }}</p>
             <h1 class="mt-1 text-3xl font-semibold">{{ $product->name }}</h1>
-            <p class="mt-3 text-2xl font-semibold">{{ $product->price }}g</p>
+            <p class="mt-3 text-2xl font-semibold"><x-price :amount="$product->price" /></p>
 
             @if ($product->stock_qty > 0)
                 <p class="mt-1 text-sm text-green-700">In stock ({{ $product->stock_qty }} available)</p>

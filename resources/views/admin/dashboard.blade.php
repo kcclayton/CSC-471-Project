@@ -6,7 +6,7 @@
     <div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="rounded-lg border border-stone-200 bg-white p-4">
             <p class="text-sm text-stone-500">Revenue</p>
-            <p class="text-3xl font-semibold">{{ number_format($revenue) }}g</p>
+            <p class="text-3xl font-semibold"><x-price :amount="$revenue" /></p>
             <p class="mt-1 text-xs text-stone-500">All orders except cancelled ones</p>
         </div>
         <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}"
@@ -68,7 +68,7 @@
                             </div>
                             <div class="flex items-center gap-3">
                                 <x-order-status :status="$order->status" />
-                                <span class="font-semibold">{{ $order->total }}g</span>
+                                <span class="font-semibold"><x-price :amount="$order->total" /></span>
                             </div>
                         </li>
                     @endforeach

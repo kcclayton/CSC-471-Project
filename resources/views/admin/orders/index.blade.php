@@ -52,7 +52,7 @@
                             </td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
                             <td class="px-4 py-3"><x-order-status :status="$order->status" /></td>
-                            <td class="px-4 py-3 text-right font-semibold">{{ $order->total }}g</td>
+                            <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$order->total" /></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -22,7 +22,7 @@
         </div>
         <div class="rounded-lg border border-stone-200 bg-white p-4">
             <p class="text-sm text-stone-500">Spent</p>
-            <p class="text-3xl font-semibold">{{ number_format($totalSpent) }}g</p>
+            <p class="text-3xl font-semibold"><x-price :amount="$totalSpent" /></p>
             <p class="mt-1 text-xs text-stone-500">Excluding cancelled orders</p>
         </div>
         <div class="rounded-lg border border-stone-200 bg-white p-4">
@@ -55,7 +55,7 @@
                             <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y') }}</td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
                             <td class="px-4 py-3"><x-order-status :status="$order->status" /></td>
-                            <td class="px-4 py-3 text-right font-semibold">{{ $order->total }}g</td>
+                            <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$order->total" /></td>
                         </tr>
                     @endforeach
                 </tbody>

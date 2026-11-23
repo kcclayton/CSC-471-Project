@@ -54,7 +54,7 @@
                     @foreach ($items as $item)
                         <li class="flex justify-between gap-4">
                             <span>{{ $item->name }} × {{ $item->quantity }}</span>
-                            <span>{{ $item->line_total }}g</span>
+                            <span><x-price :amount="$item->line_total" /></span>
                         </li>
                     @endforeach
                 </ul>
@@ -62,27 +62,27 @@
                 <dl class="space-y-1 border-t border-stone-200 pt-4 text-sm">
                     <div class="flex justify-between">
                         <dt>Subtotal</dt>
-                        <dd>{{ $totals['subtotal'] }}g</dd>
+                        <dd><x-price :amount="$totals['subtotal']" /></dd>
                     </div>
                     @if ($totals['tax'] > 0)
                         <div class="flex justify-between">
                             <dt>Tax</dt>
-                            <dd>{{ $totals['tax'] }}g</dd>
+                            <dd><x-price :amount="$totals['tax']" /></dd>
                         </div>
                     @endif
                     <div class="flex justify-between">
                         <dt>Shipping</dt>
-                        <dd>{{ $totals['ship_cost'] > 0 ? $totals['ship_cost'].'g' : 'Free' }}</dd>
+                        <dd>@if ($totals['ship_cost'] > 0) <x-price :amount="$totals['ship_cost']" /> @else Free @endif</dd>
                     </div>
                     <div class="flex justify-between border-t border-stone-200 pt-2 text-base font-semibold">
                         <dt>Total</dt>
-                        <dd>{{ $totals['total'] }}g</dd>
+                        <dd><x-price :amount="$totals['total']" /></dd>
                     </div>
                 </dl>
 
                 @if ($totals['ship_cost'] > 0)
                     <p class="mt-3 text-xs text-stone-500">
-                        Free shipping on orders of {{ config('shop.free_shipping_threshold') }}g or more.
+                        Free shipping on orders of <x-price :amount="config('shop.free_shipping_threshold')" /> or more.
                     </p>
                 @endif
 

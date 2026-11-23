@@ -44,21 +44,21 @@
             <a href="{{ route('products.index') }}" class="font-medium text-green-700 hover:underline">Clear filters</a>
         </p>
     @else
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->product_id) }}"
-                   class="group overflow-hidden rounded-lg border border-stone-200 bg-white hover:border-green-700">
+                   class="group overflow-hidden border border-stone-200 bg-white hover:border-green-700">
                     <x-product-image :product="$product" />
 
-                    <div class="p-4">
-                        <p class="text-xs text-stone-500">{{ $product->season_name }}</p>
-                        <h2 class="font-medium group-hover:text-green-700">{{ $product->name }}</h2>
-                        <div class="mt-2 flex items-center justify-between text-sm">
-                            <span class="font-semibold">{{ $product->price }}g</span>
+                    <div class="p-2.5">
+                        <p class="text-xs text-stone-500">{{ $product->season_names }}</p>
+                        <h2 class="text-sm font-medium leading-tight group-hover:text-green-700">{{ $product->name }}</h2>
+                        <div class="mt-1.5 flex items-center justify-between text-sm">
+                            <x-price :amount="$product->price" class="font-semibold" />
                             @if ($product->stock_qty > 0)
-                                <span class="text-green-700">In stock</span>
+                                <span class="text-xs text-green-700">In stock</span>
                             @else
-                                <span class="text-red-600">Out of stock</span>
+                                <span class="text-xs text-red-600">Out of stock</span>
                             @endif
                         </div>
                     </div>

@@ -40,7 +40,7 @@
                         <a href="{{ route('products.show', $item->product_id) }}" class="font-medium hover:text-green-700">
                             {{ $item->name }}
                         </a>
-                        <p class="text-sm text-stone-500">{{ $item->price }}g each</p>
+                        <p class="text-sm text-stone-500"><x-price :amount="$item->price" /></p>
                     </div>
 
                     <form method="POST" action="{{ route('cart.update', $item->cart_item_id) }}" class="flex items-center gap-2">
@@ -53,7 +53,7 @@
                         <button type="submit" class="text-sm text-green-700 hover:underline">Update</button>
                     </form>
 
-                    <p class="w-20 text-right font-semibold">{{ $item->line_total }}g</p>
+                    <p class="w-20 text-right font-semibold"><x-price :amount="$item->line_total" /></p>
 
                     <form method="POST" action="{{ route('cart.destroy', $item->cart_item_id) }}">
                         @csrf
@@ -65,7 +65,7 @@
         </div>
 
         <div class="mt-6 flex flex-col items-end gap-3">
-            <p class="text-lg">Subtotal: <span class="font-semibold">{{ $subtotal }}g</span></p>
+            <p class="text-lg">Subtotal: <span class="font-semibold"><x-price :amount="$subtotal" /></span></p>
             <a href="{{ route('checkout.create') }}"
                class="rounded-md bg-green-700 px-5 py-2 font-medium text-white hover:bg-green-800">
                 Checkout
