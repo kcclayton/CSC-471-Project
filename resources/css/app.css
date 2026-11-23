@@ -3,8 +3,20 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+@font-face {
+    font-family: 'Stardew Font';
+    src: url('../fonts/stardew-font.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Classic Boards';
+    src: url('../fonts/classic_boards/Classic\ Boards\ ALL\ CAPS.ttf') format('truetype');
+    font-display: swap;
+}
+
 @theme {
-    --font-sans: 'Pixelify Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+    --font-sans: 'Stardew Font', 'Pixelify Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
 
     /*
      * Pixel-art farm palette. These redefine Tailwind's own color names, so the classes
