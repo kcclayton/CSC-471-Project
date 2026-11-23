@@ -2,6 +2,41 @@
     <div class="mx-auto max-w-lg space-y-10">
         <h1 class="text-2xl font-semibold">Your account</h1>
 
+        {{-- Profile picture --}}
+        <section>
+            <h2 class="mb-4 text-lg font-semibold">Profile picture</h2>
+
+            <div class="flex items-center gap-4">
+                <x-avatar :user="$user" class="h-20 w-20 border-2 border-wood-dark" />
+
+                <div class="space-y-2">
+                    <form method="POST" action="{{ route('account.avatar.update') }}" enctype="multipart/form-data"
+                          class="flex flex-wrap items-center gap-2">
+                        @csrf
+                        <label for="avatar" class="sr-only">Choose a picture</label>
+                        <input id="avatar" name="avatar" type="file" required accept="image/png,image/jpeg,image/webp,image/gif"
+                               class="text-sm file:mr-3 file:border-0 file:bg-stone-100 file:px-3 file:py-1.5 file:text-sm hover:file:bg-stone-200">
+                        <button type="submit" class="bg-green-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-800">
+                            Upload
+                        </button>
+                    </form>
+
+                    @if ($user->avatar_url)
+                        <form method="POST" action="{{ route('account.avatar.destroy') }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-sm text-red-600 hover:underline">Use the default picture</button>
+                        </form>
+                    @endif
+
+                    <p class="text-xs text-stone-500">PNG, JPG, WebP or GIF, up to 1 MB. Square pictures look best.</p>
+                    @error('avatar', 'avatar')
+                        <p class="text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </section>
+
         {{-- Your details --}}
         <section>
             <h2 class="mb-4 text-lg font-semibold">Your details</h2>

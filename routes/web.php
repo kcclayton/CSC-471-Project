@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/account', [AccountController::class, 'update'])->name('account.update');
     Route::put('/account/password', [AccountController::class, 'updatePassword'])->name('account.password');
     Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
+    Route::post('/account/avatar', [AccountController::class, 'updateAvatar'])->name('account.avatar.update');
+    Route::delete('/account/avatar', [AccountController::class, 'destroyAvatar'])->name('account.avatar.destroy');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.store');
