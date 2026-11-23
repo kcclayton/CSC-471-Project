@@ -41,6 +41,71 @@
 
     --color-wood: #8a4b1d;       /* header */
     --color-wood-dark: #5b2e0f;  /* header edge, picture frames */
+
+    /* Frame colors for the farm-style boxes */
+    --color-frame-dark: #5b2a0e;
+    --color-frame-wood: #d0783a;
+    --color-frame-light: #f0a85c;
+    --color-frame-shade: #000;
+    --color-parchment: #f4c983;
+    --color-parchment-light: #fbe1a9;
+    --color-tile: #fbe1a9;
+    --color-ink: #4a1c0b;
+    --color-rust: #a3401f;
+    --color-red-600: #b3321a;  /* errors and "Out of stock", toned to the palette */
+}
+
+/*
+ * Farm-style frames, drawn with CSS borders and inset shadows (no images):
+ * dark outline → light wood bevel → orange wood → dark inner line → cream edge → parchment.
+ */
+.farm-box {
+    position: relative;
+    border: 3px solid var(--color-frame-dark);
+    background: var(--color-parchment);
+    box-shadow:
+        inset 2px 2px 0 var(--color-frame-light),
+        inset -2px -2px 0 var(--color-frame-shade),
+        inset 0 0 0 7px var(--color-frame-wood),
+        inset 0 0 0 9px var(--color-frame-dark),
+        inset 0 0 0 11px var(--farm-edge, var(--color-parchment-light));
+    padding: 1rem;
+}
+
+/* The small square "bolts" in each corner of the wood band */
+.farm-box::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    pointer-events: none;
+    background:
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) top left / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) top right / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) bottom left / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) bottom right / 5px 5px;
+    background-repeat: no-repeat;
+}
+
+/* Stacked boxes share one outline, like a two-part tooltip */
+.farm-box + .farm-box { margin-top: -3px; }
+
+.farm-title {
+    color: var(--color-ink);
+    font-weight: 700;
+}
+
+/* A lighter version of the box, for product pictures */
+.farm-box-light {
+    --farm-edge: var(--color-parchment);
+    background: var(--color-parchment-light);
+}
+.farm-box-light > img,
+.farm-box-light > div {
+    background: transparent;
+}
+
+.gen-text {
+    font-size: 1.5rem;
 }
 
 /*

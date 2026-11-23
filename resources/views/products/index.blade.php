@@ -1,6 +1,6 @@
 <x-layout title="Shop">
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 class="text-2xl font-semibold">Shop</h1>
+        <h1 class="text-2xl font-semibold">Available Products</h1>
 
         <form method="GET" action="{{ route('products.index') }}" class="flex gap-2">
             @if ($selectedSeason)
@@ -44,17 +44,19 @@
             <a href="{{ route('products.index') }}" class="font-medium text-green-700 hover:underline">Clear filters</a>
         </p>
     @else
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->product_id) }}"
-                   class="group overflow-hidden border border-stone-200 bg-white hover:border-green-700">
-                    <x-product-image :product="$product" />
+                   class="farm-shadow group flex flex-col transition-transform hover:-translate-y-0.5">
+                     <div class="farm-box farm-box-light">
+                        <x-product-image :product="$product" />
+                    </div>
 
-                    <div class="p-2.5">
-                        <p class="text-xs text-stone-500">{{ $product->season_names }}</p>
-                        <h2 class="text-sm font-medium leading-tight group-hover:text-green-700">{{ $product->name }}</h2>
+                    <div class="farm-box flex-1">
+                        <h2 class="farm-title text-sm leading-tight group-hover:underline">{{ $product->name }}</h2>
+                        <p class="text-xs text-rust">{{ $product->season_names }}</p>
                         <div class="mt-1.5 flex items-center justify-between text-sm">
-                            <x-price :amount="$product->price" class="font-semibold" />
+                            <x-price :amount="$product->price" class="font-semibold text-ink" />
                             @if ($product->stock_qty > 0)
                                 <span class="text-xs text-green-700">In stock</span>
                             @else
