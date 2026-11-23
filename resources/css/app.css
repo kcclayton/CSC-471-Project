@@ -15,8 +15,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Fields of Mistria';
+    src: url('../fonts/fields_of_mistria/fields-of-mistria.ttf') format('truetype');
+    font-display: swap;
+}
+
 @theme {
-    --font-sans: 'Stardew Font', 'Pixelify Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+    --font-sans: 'Fields of Mistria', 'Pixelify Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
 
     /*
      * Pixel-art farm palette. These redefine Tailwind's own color names, so the classes
@@ -53,6 +59,12 @@
     --color-ink: #4a1c0b;
     --color-rust: #a3401f;
     --color-red-600: #b3321a;  /* errors and "Out of stock", toned to the palette */
+}
+
+.text-logo {
+    font-family: 'Stardew Font', 'Pixelify Sans', Arial, Helvetica, sans-serif;
+    font-size: 2.5rem;
+    color: #fff4d6;
 }
 
 /*
@@ -102,10 +114,6 @@
 .farm-box-light > img,
 .farm-box-light > div {
     background: transparent;
-}
-
-.gen-text {
-    font-size: 1.5rem;
 }
 
 /*

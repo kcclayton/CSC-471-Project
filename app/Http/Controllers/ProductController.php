@@ -38,7 +38,7 @@ class ProductController extends Controller
                 });
             })
             ->orderBy('products.name')
-            ->paginate(12)
+            ->paginate(15)
             ->withQueryString();
 
         return view('products.index', compact('products', 'seasons', 'selectedSeason', 'search'));
@@ -78,6 +78,6 @@ class ProductController extends Controller
         $query->from('product_seasons')
             ->join('seasons', 'seasons.season_id', '=', 'product_seasons.season_id')
             ->whereColumn('product_seasons.product_id', 'products.product_id')
-            ->selectRaw("string_agg(seasons.name, ' · ' ORDER BY seasons.season_id)");
+            ->selectRaw("string_agg(seasons.name, ' ·  ' ORDER BY seasons.season_id)");
     }
 }

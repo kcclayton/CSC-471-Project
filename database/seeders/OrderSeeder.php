@@ -5,79 +5,136 @@ namespace Database\Seeders;
 use App\Services\CartService;
 use App\Services\OrderService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class OrderSeeder extends Seeder
 {
-    /**
-     * Each order: customer email, products as SKU => quantity, final status, and how many days ago it was placed.
-     *
-     * @var list<array{0: string, 1: array<string, int>, 2: string, 3: int}>
-     */
-    private const ORDERS = [
-        ['abigail@epelican.com',   ['SPR-001' => 7, 'SUM-001' => 2], 'delivered', 20],
-        ['sebastian@epelican.com', ['FAL-001' => 3],                 'cancelled', 12],
-        ['abigail@epelican.com',   ['ALL-001' => 5],                 'shipped',   6],
-        ['abigail@epelican.com',   ['FAL-001' => 10, 'SPR-001' => 5], 'pending',  1],
-    ];
 
-    /**
-     * Items left sitting in carts after the orders are placed: email => [SKU => quantity].
-     *
-     * @var array<string, array<string, int>>
-     */
-    private const OPEN_CARTS = [
-        'abigail@epelican.com' => ['SUM-001' => 2],
-    ];
-
-    public function run(CartService $cart, OrderService $orderService): void
+    public function run(CartService $cart, OrderService $orderService): void 
     {
         $users = DB::table('users')->pluck('user_id', 'email');
         $products = DB::table('products')->pluck('product_id', 'sku');
 
-        foreach (self::ORDERS as [$email, $items, $status, $daysAgo]) {
-            $userId = $users[$email];
+        $orders = [
+            // SEBASTIAN
+            [ // Shipping Order
+                'email' => 'sebastian@epelican.com',
+                'items' => ['ALL-004' => 30],
+                'status' => 'pending',
+                'days_ago' => 20,
+                'ship_name' => 'Sebastian',
+                'ship_street' => '24 Mountain Rd',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0102',
+                'ship_email' => 'sebastian@epelican.com',
+            ],
+            // ALEX
+            [ // Cancelled Order
+                'email' => 'alex@epelican.com',
+                'items' => ['FAL-002' => 20],
+                'status' => 'cancelled',
+                'days_ago' => 10,
+                'ship_name' => 'Alex',
+                'ship_street' => '1 River Rd',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0001',
+                'ship_email' => 'alex@epelican.com',
+            ],
+            [ // Delivered Order
+                'email' => 'alex@epelican.com',
+                'items' => ['FAL-002' => 2],
+                'status' => 'delivered',
+                'days_ago' => 10,
+                'ship_name' => 'Alex',
+                'ship_street' => '1 River Rd',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0001',
+                'ship_email' => 'alex@epelican.com',
+            ],
+            
+            // JODI
+            [ // Delivered Order
+                'email' => 'jodi@epelican.com',
+                'items' => ['SPR-003' => 1],
+                'status' => 'delivered',
+                'days_ago' => 12,
+                'ship_name' => 'Jodi',
+                'ship_street' => '1 Willow Ln',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0105',
+                'ship_email' => 'jodi@epelican.com',
+            ],
+            [ // Delivered Order
+                'email' => 'jodi@epelican.com',
+                'items' => ['ALL-002' => 2, 'ALL-003' => 2, 'ALL-005' => 1],
+                'status' => 'delivered',
+                'days_ago' => 8,
+                'ship_name' => 'Jodi',
+                'ship_street' => '1 Willow Ln',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0105',
+                'ship_email' => 'jodi@epelican.com',
+            ],
+            [ // Cancelled Order
+                'email' => 'jodi@epelican.com',
+                'items' => ['ALL-001' => 50],
+                'status' => 'cancelled',
+                'days_ago' => 2,
+                'ship_name' => 'Jodi',
+                'ship_street' => '1 Willow Ln',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0105',
+                'ship_email' => 'jodi@epelican.com',
+            ],
+            [ // Shipping Order
+                'email' => 'jodi@epelican.com',
+                'items' => ['ALL-001' => 5],
+                'status' => 'pending',
+                'days_ago' => 2,
+                'ship_name' => 'Jodi',
+                'ship_street' => '1 Willow Ln',
+                'ship_city' => 'Pelican Town',
+                'ship_state' => 'SV',
+                'ship_zip' => '00001',
+                'ship_phone' => '555-0105',
+                'ship_email' => 'jodi@epelican.com',
+            ],
+            
+        ];
 
-            foreach ($items as $sku => $quantity) {
+        foreach ($orders as $order) {
+            $userId = $users[$order['email']];
+
+            foreach ($order['items'] as $sku => $quantity) {
                 $cart->add($userId, $products[$sku], $quantity);
             }
 
-            $orderId = $orderService->place($userId, $this->shippingFor($userId));
+            $orderId = $orderService->place($userId, Arr::only($order, [
+                'ship_name', 'ship_street', 'ship_city', 'ship_state',
+                'ship_zip', 'ship_phone', 'ship_email',
+            ]));
 
             DB::table('orders')
                 ->where('order_id', $orderId)
-                ->update(['order_date' => now()->subDays($daysAgo)]);
+                ->update(['order_date' => now()->subDays($order['days_ago'])]);
 
-            foreach ($this->stepsTo($status) as $step) {
+            foreach ($this->stepsTo($order['status']) as $step) {
                 $orderService->changeStatus($orderId, $step);
             }
         }
-
-        foreach (self::OPEN_CARTS as $email => $items) {
-            foreach ($items as $sku => $quantity) {
-                $cart->add($users[$email], $products[$sku], $quantity);
-            }
-        }
-    }
-
-    /**
-     * Shipping details built from the user's account, with a made-up address.
-     *
-     * @return array<string, string>
-     */
-    private function shippingFor(int $userId): array
-    {
-        $user = DB::table('users')->where('user_id', $userId)->first();
-
-        return [
-            'ship_name' => trim($user->first_name.' '.$user->last_name),
-            'ship_street' => $userId.' Willow Lane',
-            'ship_city' => 'Pelican Town',
-            'ship_state' => 'ST',
-            'ship_zip' => '0000'.$userId,
-            'ship_phone' => '555-010'.$userId,
-            'ship_email' => $user->email,
-        ];
     }
 
     /**
@@ -94,4 +151,5 @@ class OrderSeeder extends Seeder
             default => [],
         };
     }
+
 }

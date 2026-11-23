@@ -11,7 +11,7 @@
 <body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
     <header class="border-b-4 border-wood-dark bg-wood text-white">
         <nav class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-            <a href="{{ url('/') }}" class="text-xl font-bold tracking-wide">{{ config('app.name') }}</a>
+            <a href="{{ url('/') }}" class="text-logo tracking-wide">{{ config('app.name') }}</a>
 
             <div class="flex flex-wrap items-center gap-4 text-sm">
                 <a href="{{ route('products.index') }}" class="hover:underline">Shop</a>
@@ -28,7 +28,7 @@
                     <a href="{{ route('orders.index') }}" class="hover:underline">Orders</a>
                     <a href="{{ route('account.edit') }}" class="flex items-center gap-2 hover:underline">
                         <span>Hi, {{ Auth::user()->first_name }}</span>
-                        <x-avatar :user="Auth::user()" class="h-8 w-8 border-2 border-wood-dark" />
+                        <x-avatar :user="Auth::user()" class="h-8 w-8" />
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

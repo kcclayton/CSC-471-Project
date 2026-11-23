@@ -7,7 +7,7 @@
             <h2 class="mb-4 text-lg font-semibold">Profile picture</h2>
 
             <div class="flex items-center gap-4">
-                <x-avatar :user="$user" class="h-20 w-20 border-2 border-wood-dark" />
+                <x-avatar :user="$user" class="h-20 w-20" />
 
                 <div class="space-y-2">
                     <form method="POST" action="{{ route('account.avatar.update') }}" enctype="multipart/form-data"

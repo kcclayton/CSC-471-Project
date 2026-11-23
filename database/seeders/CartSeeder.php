@@ -15,7 +15,7 @@ class CartSeeder extends Seeder
      * @var array<string, array<string, int>>
      */
     private const CARTS = [
-        'abigail@epelican.com' => ['SUM-001' => 2, 'SUM-002' => 1],
+        'penny@epelican.com' => ['SUM-001' => 2, 'SUM-002' => 1],
         'sebastian@epelican.com' => ['SPR-001' => 10],
     ];
 
