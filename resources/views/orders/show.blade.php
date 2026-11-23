@@ -1,5 +1,5 @@
 <x-layout :title="'Order #'.$order->order_id">
-    <a href="{{ route('orders.index') }}" class="mb-6 inline-block text-sm text-green-700 hover:underline">← My orders</a>
+    <a href="{{ route('orders.index') }}" class="mb-6 inline-block text-sm text-action-blue hover:underline">← My orders</a>
 
     <div class="mb-6 flex flex-wrap items-center gap-3">
         <h1 class="text-2xl font-semibold">Order #{{ $order->order_id }}</h1>
@@ -20,7 +20,7 @@
                         </div>
                         <div class="flex-1">
                             @if ($item->is_active)
-                                <a href="{{ route('products.show', $item->product_id) }}" class="font-medium hover:text-green-700">{{ $item->name }}</a>
+                                <a href="{{ route('products.show', $item->product_id) }}" class="font-medium hover:text-action-blue">{{ $item->name }}</a>
                             @else
                                 <span class="font-medium">{{ $item->name }}</span>
                             @endif
@@ -65,7 +65,7 @@
                 <p class="mt-2 text-stone-500">{{ $order->ship_phone }} · {{ $order->ship_email }}</p>
             </div>
 
-            <a href="{{ route('products.index') }}" class="block text-center text-sm text-green-700 hover:underline">
+            <a href="{{ route('products.index') }}" class="block text-center text-sm text-action-blue hover:underline">
                 Continue shopping
             </a>
         </section>

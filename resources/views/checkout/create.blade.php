@@ -37,7 +37,7 @@
                     <input id="{{ $field['name'] }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}"
                            value="{{ old($field['name'], $defaults[$field['name']]) }}"
                            required autocomplete="{{ $field['autocomplete'] }}"
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error($field['name'])
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -86,10 +86,10 @@
                     </p>
                 @endif
 
-                <button type="submit" class="mt-4 w-full rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+                <button type="submit" class="mt-4 w-full rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                     Place order
                 </button>
-                <a href="{{ route('cart.index') }}" class="mt-2 block text-center text-sm text-green-700 hover:underline">
+                <a href="{{ route('cart.index') }}" class="mt-2 block text-center text-sm text-[#3b1f0e] hover:underline">
                     Back to cart
                 </a>
             </div>

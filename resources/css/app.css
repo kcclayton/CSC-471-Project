@@ -42,8 +42,11 @@
     --color-green-50: #e3f1bd;
     --color-green-100: #d4ee9f;  /* links on the wooden header */
     --color-green-200: #a9d36b;
-    --color-green-700: #33771f;  /* buttons and links */
-    --color-green-800: #285f18;  /* button hover */
+    --color-green-700: #33771f;  /* status text */
+    --color-green-800: #285f18;  /* success text */
+
+    --color-action-blue: #286b8d;
+    --color-action-blue-hover: #265c78;
 
     --color-wood: #8a4b1d;       /* header */
     --color-wood-dark: #5b2e0f;  /* header edge, picture frames */
@@ -116,6 +119,11 @@
     background: transparent;
 }
 
+.product-image-transparent > img,
+.product-image-transparent > div {
+    background: transparent;
+}
+
 /*
  * Pixel-art shapes. These rules sit outside Tailwind's layers on purpose, so they win
  * over the utility classes in the views: square corners and 2px borders everywhere.
@@ -128,3 +136,7 @@
 .border-t { border-top-width: 2px; }
 .border-b { border-bottom-width: 2px; }
 .divide-y > :not(:last-child) { border-bottom-width: 2px; }
+
+input:is([type="text"], [type="search"], [type="email"], [type="password"], [type="number"], [type="tel"]) {
+    background-color: var(--color-white);
+}

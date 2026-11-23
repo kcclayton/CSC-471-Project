@@ -1,8 +1,10 @@
 <x-layout :title="$product->name">
-    <a href="{{ route('products.index') }}" class="mb-6 inline-block text-sm text-green-700 hover:underline">← Back to shop</a>
+    <a href="{{ route('products.index') }}" class="mb-6 inline-block text-sm text-action-blue hover:underline">← Back to shop</a>
 
     <div class="grid gap-8 md:grid-cols-2">
-        <x-product-image :product="$product" large class="rounded-lg border border-stone-200" />
+        <div class="farm-box farm-box-light">
+            <x-product-image :product="$product" large />
+        </div>
 
         <div>
             <p class="text-sm text-stone-500">{{ $productSeasons->join(' · ') }} · SKU {{ $product->sku }}</p>
@@ -39,10 +41,10 @@
                         <label for="quantity" class="mb-1 block text-sm font-medium">Quantity</label>
                         <input id="quantity" name="quantity" type="number"
                                value="{{ old('quantity', 1) }}" min="1" max="{{ $product->stock_qty }}"
-                               class="w-24 rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                               class="w-24 rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     </div>
 
-                    <button type="submit" class="rounded-md bg-green-700 px-5 py-2 font-medium text-white hover:bg-green-800">
+                    <button type="submit" class="rounded-md bg-action-blue px-5 py-2 font-medium text-white hover:bg-action-blue-hover">
                         @auth
                             Add to cart
                         @else

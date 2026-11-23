@@ -24,7 +24,7 @@
         <div class="rounded-lg border border-stone-200 bg-white px-4 py-12 text-center">
             <p class="mb-4 text-stone-600">Your cart is empty.</p>
             <a href="{{ route('products.index') }}"
-               class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+               class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                 Browse the shop
             </a>
         </div>
@@ -32,12 +32,12 @@
         <div class="divide-y divide-stone-200 rounded-lg border border-stone-200 bg-white">
             @foreach ($items as $item)
                 <div class="flex flex-wrap items-center gap-4 p-4">
-                    <div class="w-20 shrink-0">
+                    <div class="product-image-transparent w-20 shrink-0">
                         <x-product-image :product="$item" class="rounded-md" />
                     </div>
 
                     <div class="min-w-40 flex-1">
-                        <a href="{{ route('products.show', $item->product_id) }}" class="font-medium hover:text-green-700">
+                        <a href="{{ route('products.show', $item->product_id) }}" class="font-medium hover:text-action-blue">
                             {{ $item->name }}
                         </a>
                         <p class="text-sm text-stone-500"><x-price :amount="$item->price" /></p>
@@ -49,8 +49,8 @@
                         <label for="quantity-{{ $item->cart_item_id }}" class="sr-only">Quantity for {{ $item->name }}</label>
                         <input id="quantity-{{ $item->cart_item_id }}" name="quantity" type="number"
                                value="{{ $item->quantity }}" min="0" max="{{ $item->stock_qty }}"
-                               class="w-20 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
-                        <button type="submit" class="text-sm text-green-700 hover:underline">Update</button>
+                               class="w-20 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-action-blue focus:outline-none">
+                        <button type="submit" class="text-sm text-action-blue hover:underline">Update</button>
                     </form>
 
                     <p class="w-20 text-right font-semibold"><x-price :amount="$item->line_total" /></p>
@@ -67,7 +67,7 @@
         <div class="mt-6 flex flex-col items-end gap-3">
             <p class="text-lg">Subtotal: <span class="font-semibold"><x-price :amount="$subtotal" /></span></p>
             <a href="{{ route('checkout.create') }}"
-               class="rounded-md bg-green-700 px-5 py-2 font-medium text-white hover:bg-green-800">
+               class="rounded-md bg-action-blue px-5 py-2 font-medium text-white hover:bg-action-blue-hover">
                 Checkout
             </a>
         </div>

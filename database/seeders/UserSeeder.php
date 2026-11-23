@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Alex',
                 'last_name' => null,
-                'is_admin' => true,
+                'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('alex')
             ],
             [ // Elliot
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Elliot',
                 'last_name' => null,
-                'is_admin' => true,
+                'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('elliot')
             ],
             [ // Shane
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Shane',
                 'last_name' => null,
-                'is_admin' => true,
+                'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('shane')
             ],
             // BACHELORETTES

@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteAccountRequest;
+use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Http\Requests\UpdateAvatarRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-
 
 class AccountController extends Controller
 {
@@ -72,13 +71,13 @@ class AccountController extends Controller
 
         Auth::logout();
         DB::table('users')->where('user_id', $userId)->delete();
-            if ($avatar !== null) {
-                Storage::disk('public')->delete($avatar);
-            }
+        if ($avatar !== null) {
+            Storage::disk('public')->delete($avatar);
+        }
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('status', 'Your account has been deleted.');
+        return redirect('/products')->with('status', 'Your account has been deleted.');
     }
 
     /**

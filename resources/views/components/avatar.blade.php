@@ -4,6 +4,6 @@
     <img src="{{ asset('storage/'.$user->avatar_url) }}" alt=""
          {{ $attributes->merge(['class' => 'aspect-square object-cover']) }}>
 @else
-    <img src="{{ asset('images/default-avatar.svg') }}" alt=""
+    <img src="{{ asset('images/default-avatar.png') }}" alt=""
          {{ $attributes->merge(['class' => 'aspect-square [image-rendering:pixelated]']) }}>
 @endif

@@ -9,7 +9,8 @@
         @php($active = request()->routeIs(str_replace('.index', '.*', $routeName)))
         <a href="{{ route($routeName) }}" @class([
             'rounded-md px-3 py-1.5',
-            'bg-green-700 text-white' => $active,
+            'bg-action-blue text-white' => $active,
+            'font-bold' => $active,
             'hover:bg-stone-100' => ! $active,
         ])>{{ $label }}</a>
     @endforeach

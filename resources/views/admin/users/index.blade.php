@@ -18,7 +18,7 @@
                 @foreach ($users as $user)
                     <tr>
                         <td class="px-4 py-3">
-                            <a href="{{ route('admin.users.show', $user->user_id) }}" class="font-medium text-green-700 hover:underline">
+                            <a href="{{ route('admin.users.show', $user->user_id) }}" class="font-medium text-action-blue hover:underline">
                                 {{ trim($user->first_name.' '.$user->last_name) }}
                             </a>
                             @if ($user->is_admin)

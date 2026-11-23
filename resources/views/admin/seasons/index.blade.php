@@ -4,7 +4,7 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-2xl font-semibold">Seasons</h1>
         <a href="{{ route('admin.seasons.create') }}"
-           class="rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
+           class="rounded-md bg-action-blue px-4 py-2 text-sm font-medium text-white hover:bg-action-blue-hover">
             New season
         </a>
     </div>

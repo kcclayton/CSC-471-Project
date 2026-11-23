@@ -23,7 +23,7 @@
                     <button type="submit" @class([
                         'rounded-md px-3 py-1.5 font-medium text-white',
                         'bg-red-700 hover:bg-red-800' => $product->is_active,
-                        'bg-green-700 hover:bg-green-800' => ! $product->is_active,
+                        'bg-action-blue hover:bg-action-blue-hover' => ! $product->is_active,
                     ])>
                         {{ $product->is_active ? 'Remove from shop' : 'Restore to shop' }}
                     </button>
@@ -43,14 +43,14 @@
                 <div class="sm:col-span-2">
                     <label for="name" class="mb-1 block text-sm font-medium">Name</label>
                     <input id="name" name="name" type="text" value="{{ old('name', $product?->name) }}" required
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label for="sku" class="mb-1 block text-sm font-medium">SKU</label>
                     <input id="sku" name="sku" type="text" value="{{ old('sku', $product?->sku) }}" required
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 font-mono uppercase focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 font-mono uppercase focus:border-action-blue focus:outline-none">
                     @error('sku') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <label for="price" class="mb-1 block text-sm font-medium">Price (g)</label>
                     <input id="price" name="price" type="number" min="0" step="1"
                            value="{{ old('price', $product?->price) }}" required
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('price') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
@@ -68,7 +68,7 @@
                     <label for="stock_qty" class="mb-1 block text-sm font-medium">Stock</label>
                     <input id="stock_qty" name="stock_qty" type="number" min="0" step="1"
                            value="{{ old('stock_qty', $product?->stock_qty ?? 0) }}" required
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('stock_qty') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     Description <span class="font-normal text-stone-500">(optional)</span>
                 </label>
                 <textarea id="description" name="description" rows="4"
-                          class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">{{ old('description', $product?->description) }}</textarea>
+                          class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">{{ old('description', $product?->description) }}</textarea>
                 @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
@@ -122,12 +122,12 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <button type="submit" class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+                <button type="submit" class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                     {{ $product ? 'Save changes' : 'Create product' }}
                 </button>
                 <a href="{{ route('admin.products.index') }}" class="text-sm text-stone-600 hover:underline">Back to products</a>
                 @if ($product?->is_active)
-                    <a href="{{ route('products.show', $product->product_id) }}" class="ml-auto text-sm text-green-700 hover:underline">
+                    <a href="{{ route('products.show', $product->product_id) }}" class="ml-auto text-sm text-action-blue hover:underline">
                         View in shop
                     </a>
                 @endif
@@ -160,11 +160,11 @@
                                 <input type="hidden" name="_attribute_form" value="{{ $attribute->attribute_id }}">
                                 <input name="attr_name" type="text" aria-label="Attribute name" required
                                        value="{{ $editing == $attribute->attribute_id ? old('attr_name') : $attribute->attr_name }}"
-                                       class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                                       class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-action-blue focus:outline-none">
                                 <input name="attr_value" type="text" aria-label="Value" required
                                        value="{{ $editing == $attribute->attribute_id ? old('attr_value') : $attribute->attr_value }}"
-                                       class="min-w-32 flex-1 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
-                                <button type="submit" class="text-sm text-green-700 hover:underline">Save</button>
+                                       class="min-w-32 flex-1 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-action-blue focus:outline-none">
+                                <button type="submit" class="text-sm text-action-blue hover:underline">Save</button>
                             </form>
 
                             <form method="POST"
@@ -187,15 +187,15 @@
                         <label for="new_attr_name" class="mb-1 block text-sm font-medium">Name</label>
                         <input id="new_attr_name" name="attr_name" type="text" required placeholder="e.g. Color"
                                value="{{ $editing === 'new' ? old('attr_name') : '' }}"
-                               class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                               class="w-40 rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-action-blue focus:outline-none">
                     </div>
                     <div class="flex-1">
                         <label for="new_attr_value" class="mb-1 block text-sm font-medium">Value</label>
                         <input id="new_attr_value" name="attr_value" type="text" required placeholder="e.g. Yellow"
                                value="{{ $editing === 'new' ? old('attr_value') : '' }}"
-                               class="w-full rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-green-700 focus:outline-none">
+                               class="w-full rounded-md border border-stone-300 px-2 py-1.5 text-sm focus:border-action-blue focus:outline-none">
                     </div>
-                    <button type="submit" class="rounded-md bg-green-700 px-4 py-1.5 text-sm font-medium text-white hover:bg-green-800">
+                    <button type="submit" class="rounded-md bg-action-blue px-4 py-1.5 text-sm font-medium text-white hover:bg-action-blue-hover">
                         Add attribute
                     </button>
                 </form>

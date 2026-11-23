@@ -1,7 +1,7 @@
 <?php
 
-test('the application returns a successful response', function () {
-    $response = $this->get('/');
+test('the root address redirects to the product catalog', function () {
+    $this->get('/')
+        ->assertRedirect('/products');
 
-    $response->assertStatus(200);
 });

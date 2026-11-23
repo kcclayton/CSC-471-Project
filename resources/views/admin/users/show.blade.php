@@ -1,7 +1,7 @@
 <x-layout :title="trim($user->first_name.' '.$user->last_name)">
     <x-admin-nav />
 
-    <a href="{{ route('admin.users.index') }}" class="mb-6 inline-block text-sm text-green-700 hover:underline">← All users</a>
+    <a href="{{ route('admin.users.index') }}" class="mb-6 inline-block text-sm text-action-blue hover:underline">← All users</a>
 
     <div class="mb-6 flex flex-wrap items-center gap-3">
         <h1 class="text-2xl font-semibold">{{ trim($user->first_name.' '.$user->last_name) }}</h1>
@@ -50,7 +50,7 @@
                     @foreach ($orders as $order)
                         <tr>
                             <td class="px-4 py-3">
-                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-green-700 hover:underline">#{{ $order->order_id }}</a>
+                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-action-blue hover:underline">#{{ $order->order_id }}</a>
                             </td>
                             <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y') }}</td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
