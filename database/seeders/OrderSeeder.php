@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderSeeder extends Seeder
 {
-
-    public function run(CartService $cart, OrderService $orderService): void 
+    public function run(CartService $cart, OrderService $orderService): void
     {
         $users = DB::table('users')->pluck('user_id', 'email');
         $products = DB::table('products')->pluck('product_id', 'sku');
@@ -303,7 +302,7 @@ class OrderSeeder extends Seeder
                 'ship_phone' => '555-0105',
                 'ship_email' => 'clint@epelican.com',
             ],
-            [ // #23 | Willy | Vinegar 
+            [ // #23 | Willy | Vinegar
                 'email' => 'willy@epelican.com',
                 'items' => ['ALL-006' => 1],
                 'status' => 'shipped',
@@ -316,7 +315,7 @@ class OrderSeeder extends Seeder
                 'ship_phone' => '555-0300',
                 'ship_email' => 'willy@epelican.com',
             ],
-            [ // #24 | Jodi (4) | Rice 
+            [ // #24 | Jodi (4) | Rice
                 'email' => 'jodi@epelican.com',
                 'items' => ['ALL-004' => 10],
                 'status' => 'cancelled',
@@ -329,7 +328,7 @@ class OrderSeeder extends Seeder
                 'ship_phone' => '555-0203',
                 'ship_email' => 'jodi@epelican.com',
             ],
-            [ // #25 | Jodi (5) | Rice 
+            [ // #25 | Jodi (5) | Rice
                 'email' => 'jodi@epelican.com',
                 'items' => ['ALL-001' => 1],
                 'status' => 'pending',
@@ -342,8 +341,7 @@ class OrderSeeder extends Seeder
                 'ship_phone' => '555-0203',
                 'ship_email' => 'jodi@epelican.com',
             ],
-            
-            
+
         ];
 
         foreach ($orders as $order) {
@@ -366,6 +364,18 @@ class OrderSeeder extends Seeder
                 $orderService->changeStatus($orderId, $step);
             }
         }
+
+        $firstOrderDates = DB::table('orders')
+            ->select('user_id')
+            ->selectRaw('MIN(order_date) as first_order_date')
+            ->groupBy('user_id')
+            ->get();
+
+        foreach ($firstOrderDates as $firstOrder) {
+            DB::table('users')
+                ->where('user_id', $firstOrder->user_id)
+                ->update(['created_at' => $firstOrder->first_order_date]);
+        }
     }
 
     /**
@@ -382,5 +392,4 @@ class OrderSeeder extends Seeder
             default => [],
         };
     }
-
 }

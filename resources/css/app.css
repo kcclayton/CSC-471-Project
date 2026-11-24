@@ -114,10 +114,6 @@
     --farm-edge: var(--color-parchment);
     background: var(--color-parchment-light);
 }
-.farm-box-light > img,
-.farm-box-light > div {
-    background: transparent;
-}
 
 .product-image-transparent > img,
 .product-image-transparent > div {
