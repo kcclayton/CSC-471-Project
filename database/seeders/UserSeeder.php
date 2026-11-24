@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'is_admin' => true,
                 'avatar_url' => $this->seedAvatar('caroline')
             ],
-            [ // Sebastian - IT
+            [ // Sebastian - IT ✓
                 'email' => 'sebastian@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Sebastian',
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
                 'avatar_url' => $this->seedAvatar('sebastian'),
             ],
             // BACHELORS
-            [ // Alex
+            [ // Alex ✓
                 'email' => 'alex@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Alex',
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('alex')
             ],
-            [ // Elliot
+            [ // Elliot ✓
                 'email' => 'elliot@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Elliot',
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('elliot')
             ],
-            [ // Shane
+            [ // Shane ✓
                 'email' => 'shane@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Shane',
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
                 'avatar_url' => $this->seedAvatar('shane')
             ],
             // BACHELORETTES
-            [ // Abigail
+            [ // Abigail ✓
                 'email' => 'abigail@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Abigail',
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('abigail'),
             ],
-            [ // Emily
+            [ // Emily ✓
                 'email' => 'emily@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Emily',
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('emily'),
             ],
-            [ // Haley
+            [ // Haley ✓
                 'email' => 'haley@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Haley',
@@ -93,7 +93,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('haley'),
             ],
-            [ // Leah
+            [ // Leah ✓
                 'email' => 'leah@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Leah',
@@ -101,7 +101,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('leah'),
             ],
-            [ // Maru
+            [ // Maru ✓
                 'email' => 'maru@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Maru',
@@ -109,7 +109,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('maru'),
             ],
-            [ // Penny
+            [ // Penny ✓
                 'email' => 'penny@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Penny',
@@ -118,7 +118,7 @@ class UserSeeder extends Seeder
                 'avatar_url' => $this->seedAvatar('penny'),
             ],
             // MISC NPCs
-            [ // Clint
+            [ // Clint ✓
                 'email' => 'clint@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Clint',
@@ -126,7 +126,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('clint'),
             ],
-            [ // Demetrius
+            [ // Demetrius ✓
                 'email' => 'demetrius@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Demetrius',
@@ -134,7 +134,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('demetrius'),
             ],
-            [ // Gus
+            [ // Gus ✓
                 'email' => 'gus@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Gus',
@@ -142,7 +142,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('gus'),
             ],
-            [ // Jodi
+            [ // Jodi ✓
                 'email' => 'jodi@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Jodi',
@@ -150,7 +150,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('jodi'),
             ],
-            [ // Krobus
+            [ // Krobus ✓
                 'email' => 'krobus@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Krobus',
@@ -158,7 +158,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('krobus'),
             ],
-            [ // Lewis
+            [ // Lewis ✓
                 'email' => 'mayorlewis@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Lewis',
@@ -166,7 +166,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('lewis'),
             ],
-            [ // Marnie
+            [ // Marnie ✓
                 'email' => 'marnie@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Marnie',
@@ -174,7 +174,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('marnie'),
             ],
-            [ // Robin
+            [ // Robin ✓
                 'email' => 'robin@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Robin',
@@ -182,7 +182,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('robin'),
             ],
-            [ // Sandy
+            [ // Sandy ✓
                 'email' => 'sandy@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Sandy',
@@ -190,7 +190,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('sandy'),
             ],
-            [ // Willy
+            [ // Willy ✓
                 'email' => 'willy@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Willy',
@@ -198,7 +198,7 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar_url' => $this->seedAvatar('willy'),
             ],
-            [ // Rasmodius
+            [ // Rasmodius ✓
                 'email' => 'thewizard@epelican.com',
                 'pwrd_hash' => $pwrd,
                 'first_name' => 'Magnus',

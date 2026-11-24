@@ -38,7 +38,7 @@ class AuthController extends Controller
         Auth::loginUsingId($userId);
         $request->session()->regenerate();
 
-        return redirect('/products');
+        return redirect('/products')->with('status', 'Your account was created successfully.');
     }
 
     /**
@@ -75,6 +75,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/products');
+        return redirect('/products')->with('status', 'You have been logged out successfully.');
     }
 }

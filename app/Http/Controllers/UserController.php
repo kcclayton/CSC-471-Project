@@ -20,7 +20,15 @@ class UserController extends Controller
             ->leftJoin('orders', 'orders.user_id', '=', 'users.user_id')
             ->groupBy('users.user_id')
             ->orderBy('users.user_id')
-            ->select('users.user_id', 'users.email', 'users.first_name', 'users.last_name', 'users.is_admin', 'users.created_at')
+            ->select([
+                'users.user_id',
+                'users.email',
+                'users.first_name',
+                'users.last_name',
+                'users.is_admin',
+                'users.created_at',
+                'users.avatar_url',
+            ])
             ->selectRaw('COUNT(orders.order_id) as order_count')
             ->selectRaw("COALESCE(SUM(orders.total) FILTER (WHERE orders.status <> 'cancelled'), 0) as total_spent")
             ->paginate(20);
@@ -34,7 +42,7 @@ class UserController extends Controller
     public function show(int $id): View
     {
         $user = DB::table('users')
-            ->select('user_id', 'email', 'first_name', 'last_name', 'is_admin', 'created_at')
+            ->select('user_id', 'email', 'first_name', 'last_name', 'is_admin', 'created_at', 'avatar_url')
             ->where('user_id', $id)
             ->first();
 

@@ -4,6 +4,7 @@
     <a href="{{ route('admin.users.index') }}" class="mb-6 inline-block text-sm text-action-blue hover:underline">← All users</a>
 
     <div class="mb-6 flex flex-wrap items-center gap-3">
+        <x-avatar :user="$user" class="h-16 w-16 shrink-0" />
         <h1 class="text-2xl font-semibold">{{ trim($user->first_name.' '.$user->last_name) }}</h1>
         @if ($user->is_admin)
             <span class="rounded-full bg-stone-200 px-2.5 py-0.5 text-xs font-medium text-stone-700">Admin</span>
