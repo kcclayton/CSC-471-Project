@@ -1,9 +1,10 @@
 <x-layout :title="trim($user->first_name.' '.$user->last_name)">
     <x-admin-nav />
 
-    <a href="{{ route('admin.users.index') }}" class="mb-6 inline-block text-sm text-green-700 hover:underline">← All users</a>
+    <a href="{{ route('admin.users.index') }}" class="mb-6 inline-block text-sm text-action-blue hover:underline">← All users</a>
 
     <div class="mb-6 flex flex-wrap items-center gap-3">
+        <x-avatar :user="$user" class="h-16 w-16 shrink-0" />
         <h1 class="text-2xl font-semibold">{{ trim($user->first_name.' '.$user->last_name) }}</h1>
         @if ($user->is_admin)
             <span class="rounded-full bg-stone-200 px-2.5 py-0.5 text-xs font-medium text-stone-700">Admin</span>
@@ -22,7 +23,7 @@
         </div>
         <div class="rounded-lg border border-stone-200 bg-white p-4">
             <p class="text-sm text-stone-500">Spent</p>
-            <p class="text-3xl font-semibold">{{ number_format($totalSpent) }}g</p>
+            <p class="text-3xl font-semibold"><x-price :amount="$totalSpent" /></p>
             <p class="mt-1 text-xs text-stone-500">Excluding cancelled orders</p>
         </div>
         <div class="rounded-lg border border-stone-200 bg-white p-4">
@@ -50,12 +51,12 @@
                     @foreach ($orders as $order)
                         <tr>
                             <td class="px-4 py-3">
-                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-green-700 hover:underline">#{{ $order->order_id }}</a>
+                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-action-blue hover:underline">#{{ $order->order_id }}</a>
                             </td>
                             <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y') }}</td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
                             <td class="px-4 py-3"><x-order-status :status="$order->status" /></td>
-                            <td class="px-4 py-3 text-right font-semibold">{{ $order->total }}g</td>
+                            <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$order->total" /></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -5,7 +5,7 @@
         <div class="rounded-lg border border-stone-200 bg-white px-4 py-12 text-center">
             <p class="mb-4 text-stone-600">You haven't placed any orders yet.</p>
             <a href="{{ route('products.index') }}"
-               class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+               class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                 Browse the shop
             </a>
         </div>
@@ -25,14 +25,14 @@
                     @foreach ($orders as $order)
                         <tr>
                             <td class="px-4 py-3">
-                                <a href="{{ route('orders.show', $order->order_id) }}" class="font-medium text-green-700 hover:underline">
+                                <a href="{{ route('orders.show', $order->order_id) }}" class="font-medium text-action-blue hover:underline">
                                     #{{ $order->order_id }}
                                 </a>
                             </td>
                             <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->order_date)->format('M j, Y') }}</td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
                             <td class="px-4 py-3"><x-order-status :status="$order->status" /></td>
-                            <td class="px-4 py-3 text-right font-semibold">{{ $order->total }}g</td>
+                            <td class="px-4 py-3 text-right font-semibold">	<x-price :amount="$order->total" /></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -1,6 +1,6 @@
 <x-layout title="Shop">
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 class="text-2xl font-semibold">Shop</h1>
+        <h1 class="text-2xl font-semibold">Available Products</h1>
 
         <form method="GET" action="{{ route('products.index') }}" class="flex gap-2">
             @if ($selectedSeason)
@@ -9,8 +9,8 @@
             <label for="search" class="sr-only">Search products</label>
             <input id="search" name="search" type="search" value="{{ $search }}"
                    placeholder="Search by name or SKU"
-                   class="w-56 rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-green-700 focus:outline-none">
-            <button type="submit" class="rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
+                   class="w-56 rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-action-blue focus:outline-none">
+            <button type="submit" class="rounded-md bg-action-blue px-4 py-2 text-sm font-medium text-white hover:bg-action-blue-hover">
                 Search
             </button>
         </form>
@@ -21,8 +21,8 @@
         <a href="{{ route('products.index', array_filter(['search' => $search])) }}"
            @class([
                'rounded-full border px-3 py-1',
-               'border-green-700 bg-green-700 text-white' => $selectedSeason === null,
-               'border-stone-300 bg-white hover:border-green-700' => $selectedSeason !== null,
+               'border-action-blue bg-action-blue text-white' => $selectedSeason === null,
+               'border-stone-300 bg-white hover:border-action-blue' => $selectedSeason !== null,
            ])>
             All
         </a>
@@ -30,8 +30,8 @@
             <a href="{{ route('products.index', array_filter(['season' => $season->season_id, 'search' => $search])) }}"
                @class([
                    'rounded-full border px-3 py-1',
-                   'border-green-700 bg-green-700 text-white' => $selectedSeason === $season->season_id,
-                   'border-stone-300 bg-white hover:border-green-700' => $selectedSeason !== $season->season_id,
+                   'border-action-blue bg-action-blue text-white' => $selectedSeason === $season->season_id,
+                   'border-stone-300 bg-white hover:border-action-blue' => $selectedSeason !== $season->season_id,
                ])>
                 {{ $season->name }}
             </a>
@@ -41,24 +41,26 @@
     @if ($products->isEmpty())
         <p class="rounded-lg border border-stone-200 bg-white px-4 py-10 text-center text-stone-600">
             No products match.
-            <a href="{{ route('products.index') }}" class="font-medium text-green-700 hover:underline">Clear filters</a>
+            <a href="{{ route('products.index') }}" class="font-medium text-action-blue hover:underline">Clear filters</a>
         </p>
     @else
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->product_id) }}"
-                   class="group overflow-hidden rounded-lg border border-stone-200 bg-white hover:border-green-700">
-                    <x-product-image :product="$product" />
+                   class="farm-shadow group flex flex-col transition-transform hover:-translate-y-0.5">
+                     <div class="farm-box farm-box-light">
+                        <x-product-image :product="$product" />
+                    </div>
 
-                    <div class="p-4">
-                        <p class="text-xs text-stone-500">{{ $product->season_name }}</p>
-                        <h2 class="font-medium group-hover:text-green-700">{{ $product->name }}</h2>
-                        <div class="mt-2 flex items-center justify-between text-sm">
-                            <span class="font-semibold">{{ $product->price }}g</span>
+                    <div class="farm-box flex-1">
+                        <h2 class="farm-title text-sm leading-tight">{{ $product->name }}</h2>
+                        <p class="text-xs text-rust">{{ $product->season_names }}</p>
+                        <div class="mt-1.5 flex items-center justify-between text-sm">
+                            <x-price :amount="$product->price" class="font-semibold text-ink" />
                             @if ($product->stock_qty > 0)
-                                <span class="text-green-700">In stock</span>
+                                <span class="text-xs text-green-700">In stock</span>
                             @else
-                                <span class="text-red-600">Out of stock</span>
+                                <span class="text-xs text-red-600">Out of stock</span>
                             @endif
                         </div>
                     </div>

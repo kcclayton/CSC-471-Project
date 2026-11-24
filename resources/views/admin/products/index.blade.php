@@ -4,7 +4,7 @@
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-2xl font-semibold">Products</h1>
         <a href="{{ route('admin.products.create') }}"
-           class="rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800">
+           class="rounded-md bg-action-blue px-4 py-2 text-sm font-medium text-white hover:bg-action-blue-hover">
             New product
         </a>
     </div>
@@ -12,15 +12,15 @@
     <nav class="mb-4 flex gap-2 text-sm" aria-label="Product lists">
         <a href="{{ route('admin.products.index') }}" @class([
             'rounded-full border px-3 py-1',
-            'border-green-700 bg-green-700 text-white' => ! $showRemoved,
-            'border-stone-300 bg-white hover:border-green-700' => $showRemoved,
+            'border-action-blue bg-action-blue text-white' => ! $showRemoved,
+            'border-stone-300 bg-white hover:border-action-blue' => $showRemoved,
         ])>
             Current ({{ $currentCount }})
         </a>
         <a href="{{ route('admin.products.index', ['list' => 'removed']) }}" @class([
             'rounded-full border px-3 py-1',
-            'border-green-700 bg-green-700 text-white' => $showRemoved,
-            'border-stone-300 bg-white hover:border-green-700' => ! $showRemoved,
+            'border-action-blue bg-action-blue text-white' => $showRemoved,
+            'border-stone-300 bg-white hover:border-action-blue' => ! $showRemoved,
         ])>
             Removed ({{ $removedCount }})
         </a>
@@ -54,7 +54,7 @@
                         <tr>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 shrink-0">
+                                    <div class="product-image-transparent w-10 shrink-0">
                                         <x-product-image :product="$product" class="rounded" />
                                     </div>
                                     <span class="font-medium">{{ $product->name }}</span>
@@ -62,7 +62,7 @@
                             </td>
                             <td class="px-4 py-3 font-mono text-xs">{{ $product->sku }}</td>
                             <td class="px-4 py-3">{{ $product->season_names }}</td>
-                            <td class="px-4 py-3 text-right">{{ $product->price }}g</td>
+                            <td class="px-4 py-3 text-right"><x-price :amount="$product->price" /></td>
                             <td @class(['px-4 py-3 text-right', 'font-medium text-red-600' => $product->stock_qty < 1])>
                                 {{ $product->stock_qty }}
                             </td>
@@ -76,7 +76,7 @@
                                         @method('PATCH')
                                         <button type="submit" @class([
                                             'hover:underline',
-                                            'text-green-700' => $showRemoved,
+                                            'text-action-blue' => $showRemoved,
                                             'text-red-600' => ! $showRemoved,
                                         ])>
                                             {{ $showRemoved ? 'Restore' : 'Remove' }}

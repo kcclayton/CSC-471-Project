@@ -33,6 +33,21 @@ it('lets admins in', function (string $page) {
     $this->get(route($page))->assertOk();
 })->with('admin pages');
 
+it('shows user profile pictures in the admin list and overview', function () {
+    $avatarPath = 'avatars/customer.png';
+    DB::table('users')->where('user_id', $this->customerId)->update(['avatar_url' => $avatarPath]);
+    loginAs($this->adminId);
+
+    $avatarUrl = asset('storage/'.$avatarPath);
+
+    $this->get(route('admin.users.index'))
+        ->assertOk()
+        ->assertSee($avatarUrl);
+    $this->get(route('admin.users.show', $this->customerId))
+        ->assertOk()
+        ->assertSee($avatarUrl);
+});
+
 it('blocks customers from admin actions', function () {
     $productId = createProduct();
     loginAs($this->customerId);

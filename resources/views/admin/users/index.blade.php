@@ -18,17 +18,22 @@
                 @foreach ($users as $user)
                     <tr>
                         <td class="px-4 py-3">
-                            <a href="{{ route('admin.users.show', $user->user_id) }}" class="font-medium text-green-700 hover:underline">
-                                {{ trim($user->first_name.' '.$user->last_name) }}
-                            </a>
-                            @if ($user->is_admin)
-                                <span class="ml-2 rounded-full bg-stone-200 px-2 py-0.5 text-xs font-medium text-stone-700">Admin</span>
-                            @endif
+                            <div class="flex items-center gap-3">
+                                <x-avatar :user="$user" class="h-10 w-10 shrink-0" />
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('admin.users.show', $user->user_id) }}" class="font-medium text-action-blue hover:underline">
+                                        {{ trim($user->first_name.' '.$user->last_name) }}
+                                    </a>
+                                    @if ($user->is_admin)
+                                        <span class="rounded-full bg-stone-200 px-2 py-0.5 text-xs font-medium text-stone-700">Admin</span>
+                                    @endif
+                                </div>
+                            </div>
                         </td>
                         <td class="px-4 py-3">{{ $user->email }}</td>
                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($user->created_at)->format('M j, Y') }}</td>
                         <td class="px-4 py-3 text-right">{{ $user->order_count }}</td>
-                        <td class="px-4 py-3 text-right font-semibold">{{ number_format($user->total_spent) }}g</td>
+                        <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$user->total_spent" /></td>
                     </tr>
                 @endforeach
             </tbody>

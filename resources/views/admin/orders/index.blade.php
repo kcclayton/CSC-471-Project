@@ -6,16 +6,16 @@
     <nav class="mb-6 flex flex-wrap gap-2 text-sm" aria-label="Filter by status">
         <a href="{{ route('admin.orders.index') }}" @class([
             'rounded-full border px-3 py-1',
-            'border-green-700 bg-green-700 text-white' => $status === null,
-            'border-stone-300 bg-white hover:border-green-700' => $status !== null,
+            'border-action-blue bg-action-blue text-white' => $status === null,
+            'border-stone-300 bg-white hover:border-action-blue' => $status !== null,
         ])>
             All ({{ $counts->sum() }})
         </a>
         @foreach ($statuses as $option)
             <a href="{{ route('admin.orders.index', ['status' => $option]) }}" @class([
                 'rounded-full border px-3 py-1 capitalize',
-                'border-green-700 bg-green-700 text-white' => $status === $option,
-                'border-stone-300 bg-white hover:border-green-700' => $status !== $option,
+                'border-action-blue bg-action-blue text-white' => $status === $option,
+                'border-stone-300 bg-white hover:border-action-blue' => $status !== $option,
             ])>
                 {{ $option }} ({{ $counts[$option] ?? 0 }})
             </a>
@@ -41,7 +41,7 @@
                     @foreach ($orders as $order)
                         <tr>
                             <td class="px-4 py-3">
-                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-green-700 hover:underline">
+                                <a href="{{ route('admin.orders.show', $order->order_id) }}" class="font-medium text-action-blue hover:underline">
                                     #{{ $order->order_id }}
                                 </a>
                             </td>
@@ -52,7 +52,7 @@
                             </td>
                             <td class="px-4 py-3">{{ $order->item_count }}</td>
                             <td class="px-4 py-3"><x-order-status :status="$order->status" /></td>
-                            <td class="px-4 py-3 text-right font-semibold">{{ $order->total }}g</td>
+                            <td class="px-4 py-3 text-right font-semibold"><x-price :amount="$order->total" /></td>
                         </tr>
                     @endforeach
                 </tbody>

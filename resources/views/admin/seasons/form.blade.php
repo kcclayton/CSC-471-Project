@@ -15,7 +15,7 @@
             <div>
                 <label for="name" class="mb-1 block text-sm font-medium">Name</label>
                 <input id="name" name="name" type="text" value="{{ old('name', $season?->name) }}" required
-                       class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                       class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -26,14 +26,14 @@
                     Description <span class="font-normal text-stone-500">(optional)</span>
                 </label>
                 <textarea id="description" name="description" rows="3"
-                          class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">{{ old('description', $season?->description) }}</textarea>
+                          class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">{{ old('description', $season?->description) }}</textarea>
                 @error('description')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="flex items-center gap-4">
-                <button type="submit" class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+                <button type="submit" class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                     {{ $season ? 'Save changes' : 'Create season' }}
                 </button>
                 <a href="{{ route('admin.seasons.index') }}" class="text-sm text-stone-600 hover:underline">Cancel</a>

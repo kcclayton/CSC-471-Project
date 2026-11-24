@@ -3,7 +3,140 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+@font-face {
+    font-family: 'Stardew Font';
+    src: url('../fonts/stardew-font.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Classic Boards';
+    src: url('../fonts/classic_boards/Classic\ Boards\ ALL\ CAPS.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fields of Mistria';
+    src: url('../fonts/fields_of_mistria/fields-of-mistria.ttf') format('truetype');
+    font-display: swap;
+}
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Fields of Mistria', 'Pixelify Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+
+    /*
+     * Pixel-art farm palette. These redefine Tailwind's own color names, so the classes
+     * already used in the views (bg-white, border-stone-200, bg-green-700, ...) take on
+     * the theme without editing every page.
+     */
+    --color-white: #fff4d6;      /* parchment: panels, cards, text on buttons */
+    --color-stone-50: #f3d494;   /* page background, table headers */
+    --color-stone-100: #ecc47e;  /* hover backgrounds */
+    --color-stone-200: #b8743a;  /* panel borders and dividers */
+    --color-stone-300: #9c5a26;  /* input borders */
+    --color-stone-500: #774a23;  /* secondary text */
+    --color-stone-600: #6d431f;
+    --color-stone-700: #573316;
+    --color-stone-900: #3b1f0d;  /* main text */
+
+    --color-green-50: #e3f1bd;
+    --color-green-100: #d4ee9f;  /* links on the wooden header */
+    --color-green-200: #a9d36b;
+    --color-green-700: #33771f;  /* status text */
+    --color-green-800: #285f18;  /* success text */
+
+    --color-action-blue: #286b8d;
+    --color-action-blue-hover: #265c78;
+
+    --color-wood: #8a4b1d;       /* header */
+    --color-wood-dark: #5b2e0f;  /* header edge, picture frames */
+
+    /* Frame colors for the farm-style boxes */
+    --color-frame-dark: #5b2a0e;
+    --color-frame-wood: #d0783a;
+    --color-frame-light: #f0a85c;
+    --color-frame-shade: #000;
+    --color-parchment: #f4c983;
+    --color-parchment-light: #fbe1a9;
+    --color-tile: #fbe1a9;
+    --color-ink: #4a1c0b;
+    --color-rust: #a3401f;
+    --color-red-600: #b3321a;  /* errors and "Out of stock", toned to the palette */
+}
+
+.text-logo {
+    font-family: 'Stardew Font', 'Pixelify Sans', Arial, Helvetica, sans-serif;
+    font-size: 2.5rem;
+    color: #fff4d6;
+}
+
+/*
+ * Farm-style frames, drawn with CSS borders and inset shadows (no images):
+ * dark outline → light wood bevel → orange wood → dark inner line → cream edge → parchment.
+ */
+.farm-box {
+    position: relative;
+    border: 3px solid var(--color-frame-dark);
+    background: var(--color-parchment);
+    box-shadow:
+        inset 2px 2px 0 var(--color-frame-light),
+        inset -2px -2px 0 var(--color-frame-shade),
+        inset 0 0 0 7px var(--color-frame-wood),
+        inset 0 0 0 9px var(--color-frame-dark),
+        inset 0 0 0 11px var(--farm-edge, var(--color-parchment-light));
+    padding: 1rem;
+}
+
+/* The small square "bolts" in each corner of the wood band */
+.farm-box::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    pointer-events: none;
+    background:
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) top left / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) top right / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) bottom left / 5px 5px,
+        linear-gradient(var(--color-frame-dark), var(--color-frame-dark)) bottom right / 5px 5px;
+    background-repeat: no-repeat;
+}
+
+/* Stacked boxes share one outline, like a two-part tooltip */
+.farm-box + .farm-box { margin-top: -3px; }
+
+.farm-title {
+    color: var(--color-ink);
+    font-weight: 700;
+}
+
+/* A lighter version of the box, for product pictures */
+.farm-box-light {
+    --farm-edge: var(--color-parchment);
+    background: var(--color-parchment-light);
+}
+.farm-box-light > img,
+.farm-box-light > div {
+    background: transparent;
+}
+
+.product-image-transparent > img,
+.product-image-transparent > div {
+    background: transparent;
+}
+
+/*
+ * Pixel-art shapes. These rules sit outside Tailwind's layers on purpose, so they win
+ * over the utility classes in the views: square corners and 2px borders everywhere.
+ */
+*, ::before, ::after {
+    border-radius: 0;
+}
+
+.border { border-width: 2px; }
+.border-t { border-top-width: 2px; }
+.border-b { border-bottom-width: 2px; }
+.divide-y > :not(:last-child) { border-bottom-width: 2px; }
+
+input:is([type="text"], [type="search"], [type="email"], [type="password"], [type="number"], [type="tel"]) {
+    background-color: var(--color-white);
 }

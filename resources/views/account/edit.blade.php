@@ -2,6 +2,41 @@
     <div class="mx-auto max-w-lg space-y-10">
         <h1 class="text-2xl font-semibold">Your account</h1>
 
+        {{-- Profile picture --}}
+        <section>
+            <h2 class="mb-4 text-lg font-semibold">Profile picture</h2>
+
+            <div class="flex items-center gap-4">
+                <x-avatar :user="$user" class="h-20 w-20" />
+
+                <div class="space-y-2">
+                    <form method="POST" action="{{ route('account.avatar.update') }}" enctype="multipart/form-data"
+                          class="flex flex-wrap items-center gap-2">
+                        @csrf
+                        <label for="avatar" class="sr-only">Choose a picture</label>
+                        <input id="avatar" name="avatar" type="file" required accept="image/png,image/jpeg,image/webp,image/gif"
+                               class="text-sm file:mr-3 file:border-0 file:bg-stone-100 file:px-3 file:py-1.5 file:text-sm hover:file:bg-stone-200">
+                        <button type="submit" class="bg-action-blue px-3 py-1.5 text-sm font-medium text-white hover:bg-action-blue-hover">
+                            Upload
+                        </button>
+                    </form>
+
+                    @if ($user->avatar_url)
+                        <form method="POST" action="{{ route('account.avatar.destroy') }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-sm text-red-600 hover:underline">Use the default picture</button>
+                        </form>
+                    @endif
+
+                    <p class="text-xs text-stone-500">PNG, JPG, WebP or GIF, up to 1 MB. Square pictures look best.</p>
+                    @error('avatar', 'avatar')
+                        <p class="text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </section>
+
         {{-- Your details --}}
         <section>
             <h2 class="mb-4 text-lg font-semibold">Your details</h2>
@@ -15,7 +50,7 @@
                         <label for="first_name" class="mb-1 block text-sm font-medium">First name</label>
                         <input id="first_name" name="first_name" type="text"
                                value="{{ old('first_name', $user->first_name) }}" required autocomplete="given-name"
-                               class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                               class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                         @error('first_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -27,7 +62,7 @@
                         </label>
                         <input id="last_name" name="last_name" type="text"
                                value="{{ old('last_name', $user->last_name) }}" autocomplete="family-name"
-                               class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                               class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                         @error('last_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -38,13 +73,13 @@
                     <label for="email" class="mb-1 block text-sm font-medium">Email</label>
                     <input id="email" name="email" type="email"
                            value="{{ old('email', $user->email) }}" required autocomplete="email"
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('email')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <button type="submit" class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+                <button type="submit" class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                     Save details
                 </button>
             </form>
@@ -62,7 +97,7 @@
                     <label for="current_password" class="mb-1 block text-sm font-medium">Current password</label>
                     <input id="current_password" name="current_password" type="password"
                            required autocomplete="current-password"
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('current_password', 'updatePassword')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -72,7 +107,7 @@
                     <label for="new_password" class="mb-1 block text-sm font-medium">New password</label>
                     <input id="new_password" name="password" type="password"
                            required autocomplete="new-password"
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                     @error('password', 'updatePassword')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -82,10 +117,10 @@
                     <label for="password_confirmation" class="mb-1 block text-sm font-medium">Confirm new password</label>
                     <input id="password_confirmation" name="password_confirmation" type="password"
                            required autocomplete="new-password"
-                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-green-700 focus:outline-none">
+                           class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">
                 </div>
 
-                <button type="submit" class="rounded-md bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800">
+                <button type="submit" class="rounded-md bg-action-blue px-4 py-2 font-medium text-white hover:bg-action-blue-hover">
                     Change password
                 </button>
             </form>
