@@ -280,7 +280,7 @@ class OrderSeeder extends Seeder
             [ // #21 | Jodi (4) | Flour + Sugar + Oil
                 'email' => 'jodi@epelican.com',
                 'items' => ['ALL-003' => 1, 'ALL-002' => 1, 'ALL-005' => 1],
-                'status' => 'delivered',
+                'status' => 'shipped',
                 'days_ago' => 9,
                 'ship_name' => 'Jodi',
                 'ship_street' => '1 Willow Ln',
@@ -293,8 +293,8 @@ class OrderSeeder extends Seeder
             [ // #22 | Clint | Pumpkin Seeds
                 'email' => 'clint@epelican.com',
                 'items' => ['FAL-002' => 3],
-                'status' => 'delivered',
-                'days_ago' => 5,
+                'status' => 'shipped',
+                'days_ago' => 6,
                 'ship_name' => 'Clint',
                 'ship_street' => 'Blacksmith',
                 'ship_city' => 'Pelican Town',
@@ -306,8 +306,8 @@ class OrderSeeder extends Seeder
             [ // #23 | Willy | Vinegar 
                 'email' => 'willy@epelican.com',
                 'items' => ['ALL-006' => 1],
-                'status' => 'delivered',
-                'days_ago' => 4,
+                'status' => 'shipped',
+                'days_ago' => 5,
                 'ship_name' => 'Willy',
                 'ship_street' => 'Fish Shop',
                 'ship_city' => 'Pelican Town',
