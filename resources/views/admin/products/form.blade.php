@@ -94,7 +94,7 @@
                     Description <span class="font-normal text-stone-500">(optional)</span>
                 </label>
                 <textarea id="description" name="description" rows="4"
-                          class="w-full rounded-md border border-stone-300 px-3 py-2 focus:border-action-blue focus:outline-none">{{ old('description', $product?->description) }}</textarea>
+                          class="w-full rounded-md border border-stone-300 bg-white px-3 py-2 focus:border-action-blue focus:outline-none">{{ old('description', $product?->description) }}</textarea>
                 @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 

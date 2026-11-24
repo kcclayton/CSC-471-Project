@@ -52,15 +52,19 @@
                         <x-product-image :product="$product" />
                     </div>
 
-                    <div class="farm-box flex-1">
+                    <div class="farm-box flex flex-1 flex-col">
                         <h2 class="farm-title text-sm leading-tight">{{ $product->name }}</h2>
                         <p class="text-xs text-rust">{{ $product->season_names }}</p>
-                        <div class="mt-1.5 flex items-center justify-between text-sm">
+                        <div class="mt-auto flex items-center justify-between pt-1.5 text-sm">
                             <x-price :amount="$product->price" class="font-semibold text-ink" />
                             @if ($product->stock_qty > 0)
                                 <span class="text-xs text-green-700">In stock</span>
                             @else
-                                <span class="text-xs text-red-600">Out of stock</span>
+                                <span @class([
+                                    'text-red-600',
+                                    'text-xs' => $product->price <= 9999,
+                                    'text-[10px]' => $product->price > 9999,
+                                ])>Out of stock</span>
                             @endif
                         </div>
                     </div>
